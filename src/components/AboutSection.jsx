@@ -1,94 +1,82 @@
-/**
- * AboutSection — Two-column layout with portrait photo and bio text.
- *
- * Props (all optional):
- *   imageSrc  {string}  URL or import path of portrait image
- *   imageAlt  {string}  Alt text for the portrait
- */
-export default function AboutSection({
-  imageSrc = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&auto=format&fit=crop',
-  imageAlt = 'Professional portrait of Buddhima Hewage',
-}) {
+export default function AboutSection() {
   return (
     <section
       id="about"
-      className="py-40 px-6 md:px-20 reveal"
+      className="py-32 px-6 md:px-20 reveal"
       aria-label="About me"
     >
-      <div className="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-
-        {/* Portrait column */}
-        <div className="md:col-span-5 relative">
-          {/* Decorative border accent */}
-          <div className="absolute -top-4 -left-4 w-32 h-32 border border-primary/30 pointer-events-none" />
-          <div className="absolute -bottom-4 -right-4 w-24 h-24 border border-primary/20 pointer-events-none" />
-
-          <div className="aspect-[4/5] overflow-hidden grayscale contrast-110 relative">
-            <img
-              src={imageSrc}
-              alt={imageAlt}
-              className="w-full h-full object-cover transition-all duration-700 hover:grayscale-0 hover:scale-105"
-              loading="lazy"
-            />
-            {/* Subtle color wash */}
-            <div className="absolute inset-0 bg-primary/5 mix-blend-color pointer-events-none" />
-          </div>
-        </div>
-
-        {/* Text column */}
-        <div className="md:col-span-7 md:pl-16 flex flex-col gap-6">
+      <div className="max-w-5xl mx-auto flex flex-col gap-8">
+        
+        {/* Section Header */}
+        <div className="text-center md:text-left mb-2">
           <span
             className="font-mono uppercase text-primary tracking-[0.28em]"
             style={{ fontSize: '11px', fontWeight: 500 }}
           >
-            About Me
+            Who I Am
           </span>
-
           <h2
-            className="text-on-surface font-semibold leading-tight tracking-tight"
-            style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.03em' }}
+            className="text-on-surface font-semibold leading-tight tracking-tight mt-2"
+            style={{ fontSize: 'clamp(32px, 4vw, 42px)', letterSpacing: '-0.03em' }}
           >
-            Precision as a standard,&nbsp;
-            <br className="hidden md:block" />
-            innovation as a requirement.
+            Building Through Education.
           </h2>
-
-          <p className="text-on-surface-variant leading-relaxed" style={{ fontSize: '17px' }}>
-            I am an engineer driven by the intersection of computational
-            efficiency and intelligent design. My journey in software engineering
-            is defined by a relentless curiosity for how complex systems can be
-            simplified through elegant code.
-          </p>
-          <p className="text-on-surface-variant leading-relaxed" style={{ fontSize: '17px' }}>
-            Specializing in AI/ML architectures and Cloud&nbsp;Native
-            development, I focus on building products that aren&rsquo;t just
-            functional, but architecturally sound and scalable for the future.
-          </p>
-
-          {/* Quick stats */}
-          <div className="grid grid-cols-3 gap-6 pt-4 border-t border-white/8">
-            {[
-              { value: '3+', label: 'Years coding' },
-              { value: '12+', label: 'Projects shipped' },
-              { value: '4×', label: "Dean's List" },
-            ].map(({ value, label }) => (
-              <div key={label} className="flex flex-col gap-1">
-                <span
-                  className="text-primary font-bold"
-                  style={{ fontSize: '28px', letterSpacing: '-0.04em' }}
-                >
-                  {value}
-                </span>
-                <span
-                  className="text-on-surface-variant font-mono uppercase tracking-widest"
-                  style={{ fontSize: '10px' }}
-                >
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
+
+        {/* About Me Intro Card */}
+        <div className="p-6 md:p-10 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm shadow-xl relative overflow-hidden">
+          {/* Subtle gradient wash */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-50 pointer-events-none" aria-hidden="true" />
+          
+          <p className="relative z-10 text-on-surface-variant leading-relaxed text-[16px] md:text-[18px]">
+            Currently pursuing a degree in Software Engineering with a CGPA of 3.44, I am continuously expanding my knowledge through academic studies, practical projects, and self-learning. My interests lie in software development, AI technologies, and cloud computing, where I enjoy exploring innovative solutions and transforming ideas into impactful applications.
+          </p>
+        </div>
+
+        {/* Details Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Focused On */}
+          <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/5 hover:border-white/10 transition-colors">
+            <h3 className="text-[12px] font-mono text-primary uppercase tracking-widest mb-5">Focused On</h3>
+            <ul className="flex flex-col gap-4">
+              {['Full-Stack Development', 'AI & Machine Learning', 'Cloud Computing', 'Software Architecture'].map(item => (
+                <li key={item} className="text-[14px] md:text-[15px] text-on-surface-variant flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0" /> 
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Currently Learning */}
+          <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/5 hover:border-white/10 transition-colors">
+            <h3 className="text-[12px] font-mono text-[#67e8f9] uppercase tracking-widest mb-5">Learning</h3>
+            <ul className="flex flex-col gap-4">
+              {['AWS Cloud Fundamentals', 'Advanced React', 'ML Applications', 'DevOps Practices'].map(item => (
+                <li key={item} className="text-[14px] md:text-[15px] text-on-surface-variant flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#67e8f9]/60 mt-1.5 flex-shrink-0" /> 
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Beyond Technology */}
+          <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-white/[0.04] to-transparent border border-white/5 hover:border-white/10 transition-colors">
+            <h3 className="text-[12px] font-mono text-[#fde047] uppercase tracking-widest mb-5">Beyond Tech</h3>
+            <ul className="flex flex-col gap-4">
+              {['Event Organization', 'Team Collaboration', 'Continuous Learning', 'Problem Solving'].map(item => (
+                <li key={item} className="text-[14px] md:text-[15px] text-on-surface-variant flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#fde047]/60 mt-1.5 flex-shrink-0" /> 
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+
       </div>
     </section>
   );

@@ -4,7 +4,10 @@
 
 /* ─── Base Reset & Typography ─────────────────────────────── */
 @layer base {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
@@ -33,12 +36,12 @@
   user-select: none;
 }
 
-/* ─── Scroll Reveal Animation ──────────────────────────────── */
+/* ─── Scroll Reveal ────────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(32px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.active {
@@ -57,16 +60,11 @@
   overflow: hidden;
 }
 
-/* Mouse-follow glow on glass cards */
 .glass-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(192, 193, 255, 0.06),
-    transparent 40%
-  );
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(192, 193, 255, 0.06), transparent 40%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -77,7 +75,7 @@
   opacity: 1;
 }
 
-/* ─── Nav link underline animation ─────────────────────────── */
+/* ─── Nav link ─────────────────────────────────────────────── */
 .nav-link {
   position: relative;
 }
@@ -97,23 +95,28 @@
   width: 100%;
 }
 
-/* ─── Hero gradient overlay ─────────────────────────────────── */
-.hero-gradient {
-  background: radial-gradient(
-    ellipse 80% 60% at 50% 50%,
-    rgba(192, 193, 255, 0.06) 0%,
-    transparent 70%
-  );
+/* ─── Stagger delays ───────────────────────────────────────── */
+.delay-100 {
+  transition-delay: 100ms;
 }
 
-/* ─── Stagger delay utilities ────────────────────────────────── */
-.delay-100 { transition-delay: 100ms; }
-.delay-200 { transition-delay: 200ms; }
-.delay-300 { transition-delay: 300ms; }
-.delay-400 { transition-delay: 400ms; }
-.delay-500 { transition-delay: 500ms; }
+.delay-200 {
+  transition-delay: 200ms;
+}
 
-/* ─── Timeline vertical line centering ──────────────────────── */
+.delay-300 {
+  transition-delay: 300ms;
+}
+
+.delay-400 {
+  transition-delay: 400ms;
+}
+
+.delay-500 {
+  transition-delay: 500ms;
+}
+
+/* ─── Timeline ─────────────────────────────────────────────── */
 .timeline-line {
   position: relative;
   border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -124,4 +127,540 @@
     margin-left: 0;
     left: 50%;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════════════════════════ */
+
+.hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(192, 193, 255, 0.06) 0%, transparent 70%);
+}
+
+/* Gradient name text */
+.hero-gradient-text {
+  background: linear-gradient(135deg, #c0c1ff 0%, #a78bfa 45%, #67e8f9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline;
+}
+
+/* Decorative orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  opacity: 0.18;
+  animation: orbDrift 12s ease-in-out infinite alternate;
+}
+
+.hero-orb--purple {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, #7c3aed, transparent 70%);
+  top: -10%;
+  right: -5%;
+  animation-duration: 14s;
+}
+
+.hero-orb--cyan {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, #06b6d4, transparent 70%);
+  bottom: 5%;
+  left: -8%;
+  animation-duration: 10s;
+  animation-delay: -4s;
+}
+
+@keyframes orbDrift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    transform: translate(30px, -30px) scale(1.08);
+  }
+}
+
+/* Availability badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(192, 193, 255, 0.07);
+  border: 1px solid rgba(192, 193, 255, 0.18);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(192, 193, 255, 0.85);
+  letter-spacing: 0.03em;
+  backdrop-filter: blur(8px);
+}
+
+.hero-badge-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: badgePulse 2s ease-out infinite;
+}
+
+@keyframes badgePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55);
+  }
+
+  70% {
+    box-shadow: 0 0 0 7px rgba(74, 222, 128, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
+/* Typewriter */
+.hero-typewriter {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 17px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #c0c1ff, #67e8f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.01em;
+}
+
+.hero-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  -webkit-text-fill-color: #a78bfa;
+  animation: cursorBlink 0.75s step-end infinite;
+}
+
+@keyframes cursorBlink {
+
+  from,
+  to {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* CTA Buttons */
+.hero-btn-primary {
+  display: inline-block;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  border-radius: 4px;
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 24px rgba(99, 102, 241, 0.35);
+}
+
+.hero-btn-primary:hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 0 36px rgba(99, 102, 241, 0.55);
+}
+
+.hero-btn-primary:active {
+  transform: scale(0.97);
+}
+
+.hero-btn-secondary {
+  display: inline-block;
+  padding: 14px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.25s, background 0.25s, transform 0.2s, color 0.25s;
+}
+
+.hero-btn-secondary:hover {
+  border-color: rgba(192, 193, 255, 0.45);
+  background: rgba(192, 193, 255, 0.07);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Social links */
+.hero-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.hero-social-link:hover {
+  color: #c0c1ff;
+  border-color: rgba(192, 193, 255, 0.2);
+  background: rgba(192, 193, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Scroll line */
+.hero-scroll-line {
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.3));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(0.85);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(1.1);
+  }
+}
+
+/* Open-to-Work status chip (shared by hero badge + card chip) */
+.profile-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(10, 10, 18, 0.88);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.profile-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: statusPulse 2s ease-out infinite;
+}
+
+@keyframes statusPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+  }
+
+  70% {
+    box-shadow: 0 0 0 7px rgba(74, 222, 128, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROFILE CARD — Hanging lanyard + spring-pendulum physics
+   pc-wrap  : full right-column hit zone (mouse events scoped here)
+   pc-outer : pendulum pivot — JS sets --rz / --rx each frame
+   pc-scene : static card layout container
+   pc-card  : individual cards
+═══════════════════════════════════════════════════════════════ */
+
+/* Full right-column hit zone */
+.pc-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Pendulum pivot
+   transform-origin: center -52px → pivot 52px ABOVE the element.
+   The whole stack hangs and swings from that point. */
+.pc-outer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: center -52px;
+  transform: perspective(900px) rotateZ(var(--rz, 0deg)) rotateX(var(--rx, 0deg));
+  transform-style: preserve-3d;
+}
+
+/* ── Belt / lanyard ────────────────────────────────────────── */
+.pc-belt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+/* Horizontal bar */
+.pc-belt-bar {
+  position: relative;
+  width: 80px;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to bottom, rgba(192, 193, 255, 0.35), rgba(99, 102, 241, 0.20));
+  border: 1px solid rgba(192, 193, 255, 0.30);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Rivets */
+.pc-belt-rivet {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(99, 102, 241, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pc-belt-rivet--l {
+  left: 10px;
+}
+
+.pc-belt-rivet--r {
+  right: 10px;
+}
+
+/* Hook / clip */
+.pc-belt-hook {
+  width: 20px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-belt-arch {
+  display: block;
+  width: 18px;
+  height: 10px;
+  border: 2px solid rgba(192, 193, 255, 0.45);
+  border-bottom: none;
+  border-radius: 9px 9px 0 0;
+  box-shadow: 0 -2px 6px rgba(99, 102, 241, 0.3);
+}
+
+/* Thread */
+.pc-belt-thread {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(to bottom, rgba(192, 193, 255, 0.50), rgba(192, 193, 255, 0.06));
+  border-radius: 1px;
+}
+
+/* ── Card stack container ──────────────────────────────────── */
+.pc-scene {
+  position: relative;
+  width: 280px;
+  height: 360px;
+}
+
+/* ── Base card ─────────────────────────────────────────────── */
+.pc-card {
+  position: absolute;
+  width: 260px;
+  height: 340px;
+  border-radius: 20px;
+  overflow: hidden;
+  /* individual cards do NOT tilt — pc-outer handles all 3D */
+}
+
+/* Back card */
+.pc-card--back {
+  top: 20px;
+  left: 18px;
+  transform: rotate(-6deg) translate(-6px, 6px);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.38) 0%, rgba(139, 92, 246, 0.22) 50%, rgba(103, 232, 249, 0.14) 100%);
+  border: 1px solid rgba(192, 193, 255, 0.20);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1;
+}
+
+.pc-card-gradient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 15%, rgba(192, 193, 255, 0.14), transparent 70%);
+}
+
+/* Mid card */
+.pc-card--mid {
+  top: 12px;
+  left: 10px;
+  transform: rotate(-3deg) translate(-3px, 3px);
+  background: rgba(18, 18, 30, 0.60);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-top-color: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 2;
+}
+
+/* Front card — photo */
+.pc-card--front {
+  top: 0;
+  left: 0;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-top-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.60),
+    0 3px 10px rgba(0, 0, 0, 0.40),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  z-index: 3;
+  background: #0a0a12;
+}
+
+/* Shimmer edge */
+.pc-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(192, 193, 255, 0.60) 40%, rgba(103, 232, 249, 0.60) 60%, transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Photo — zoomed 50%, face focused, keeping high resolution */
+.pc-photo {
+  position: absolute;
+  top: -15%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  transform: translateZ(0.1px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Card inner tag layout */
+.pc-card-inner {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.pc-card-inner--mid {
+  bottom: auto;
+  top: 16px;
+  left: auto;
+  right: 16px;
+  align-items: flex-end;
+}
+
+/* Tag pills */
+.pc-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.60);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.pc-tag--accent {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(99, 102, 241, 0.35);
+  color: rgba(192, 193, 255, 0.85);
+}
+
+.pc-tag--cyan {
+  background: rgba(103, 232, 249, 0.10);
+  border-color: rgba(103, 232, 249, 0.28);
+  color: rgba(103, 232, 249, 0.85);
+}
+
+/* Name tag */
+.pc-name-tag {
+  position: absolute;
+  bottom: -14px;
+  right: -14px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: rgba(8, 8, 18, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-top-color: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+}
+
+.pc-name-tag-line {
+  display: inline-block;
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #6366f1, #67e8f9);
+}
+
+/* Status chip position override inside card stack */
+.pc-scene .profile-status-chip {
+  position: absolute;
+  bottom: auto;
+  top: -14px;
+  left: -14px;
+  z-index: 10;
 }
