@@ -23,15 +23,10 @@ export default function AboutSection() {
           </h2>
         </div>
 
-        {/* About Me Intro Card */}
-        <div className="p-6 md:p-10 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm shadow-xl relative overflow-hidden">
-          {/* Subtle gradient wash */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-50 pointer-events-none" aria-hidden="true" />
-          
-          <p className="relative z-10 text-on-surface-variant leading-relaxed text-[16px] md:text-[18px]">
-            Currently pursuing a degree in Software Engineering with a CGPA of 3.44, I am continuously expanding my knowledge through academic studies, practical projects, and self-learning. My interests lie in software development, AI technologies, and cloud computing, where I enjoy exploring innovative solutions and transforming ideas into impactful applications.
-          </p>
-        </div>
+        {/* About Me Text */}
+        <p className="text-on-surface-variant leading-relaxed text-[16px] md:text-[18px] max-w-4xl">
+          Currently pursuing a degree in Software Engineering with a CGPA of 3.44, I am continuously expanding my knowledge through academic studies, practical projects, and self-learning. My interests lie in software development, AI technologies, and cloud computing, where I enjoy exploring innovative solutions and transforming ideas into impactful applications.
+        </p>
 
         {/* Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

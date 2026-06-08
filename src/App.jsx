@@ -3,7 +3,7 @@ import { useScrollReveal }  from './hooks/useScrollReveal';
 import Navbar          from './components/Navbar';
 import HeroSection     from './components/HeroSection';
 import AboutSection    from './components/AboutSection';
-import ExpertiseSection from './components/ExpertiseSection';
+import TechStackSection from './components/TechStackSection';
 import ProjectsSection from './components/ProjectsSection';
 import TimelineSection from './components/TimelineSection';
 import ContactSection  from './components/ContactSection';
@@ -32,7 +32,7 @@ export default function App() {
       <main>
         <HeroSection />
         <AboutSection />
-        <ExpertiseSection />
+        <TechStackSection />
         <ProjectsSection />
         <TimelineSection />
         <ContactSection />

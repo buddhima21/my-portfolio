@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 
 const NAV_LINKS = [
   { label: 'Projects', href: '#projects' },
-  { label: 'Expertise', href: '#expertise' },
+  { label: 'Tech Stack', href: '#techstack' },
   { label: 'Timeline', href: '#timeline' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -41,11 +41,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-20 py-4 transition-all duration-500 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-20 py-4 transition-all duration-500 ${scrolled
           ? 'bg-surface/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20'
           : 'bg-transparent'
-      }`}
+        }`}
     >
       {/* Logo / Name */}
       <a
@@ -53,7 +52,7 @@ export default function Navbar() {
         className="text-headline-lg font-bold tracking-tight text-on-surface hover:text-primary transition-colors duration-300"
         style={{ fontSize: '20px', letterSpacing: '-0.02em' }}
       >
-        BUDDHIMA HEWAGE
+        BUDDHIMA PORTFOLIO
       </a>
 
       {/* Desktop Nav */}
@@ -125,9 +124,8 @@ export default function Navbar() {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-x-0 top-[65px] bg-surface/95 backdrop-blur-xl border-b border-white/5 md:hidden transition-all duration-500 ${
-          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-x-0 top-[65px] bg-surface/95 backdrop-blur-xl border-b border-white/5 md:hidden transition-all duration-500 ${mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
       >
         <nav className="flex flex-col p-6 gap-6">
           {NAV_LINKS.map(({ label, href }) => (
@@ -140,7 +138,7 @@ export default function Navbar() {
               {label}
             </a>
           ))}
-          
+
           <a
             href="/resume.pdf"
             target="_blank"
