@@ -29,7 +29,7 @@ export default function AboutSection() {
             Currently pursuing a degree in Software Engineering with a CGPA of 3.44, I am
             continuously expanding my knowledge through academic studies, practical projects,
             and self-learning. My interests lie in software development, AI technologies, and
-            cloud computing — where I enjoy exploring innovative solutions and transforming
+            cloud computing where I enjoy exploring innovative solutions and transforming
             ideas into impactful applications. I believe in writing clean, maintainable code
             and building software that makes a real difference in people's everyday lives.
           </p>
