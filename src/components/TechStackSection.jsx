@@ -129,6 +129,7 @@ export default function TechStackSection() {
           user-select: none;
           filter: blur(0.4px);
           transition: opacity 0.4s;
+          will-change: transform;
         }
         .ts-float-icon:nth-child(odd)  { animation: floatUp   var(--dur,7s) ease-in-out var(--delay,0s) infinite; }
         .ts-float-icon:nth-child(even) { animation: floatDown var(--dur,7s) ease-in-out var(--delay,0s) infinite; }
@@ -254,7 +255,9 @@ export default function TechStackSection() {
             '--dur': `${dur}s`,
             '--delay': `${delay}s`,
           }}
-          loading="lazy"
+          loading="eager"
+          decoding="async"
+          fetchPriority="low"
         />
       ))}
 
