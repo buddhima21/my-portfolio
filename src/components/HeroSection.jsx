@@ -218,7 +218,7 @@ export default function HeroSection({
       <div className="hero-orb hero-orb--cyan"   aria-hidden="true" />
 
       {/* 2-column grid */}
-      <div className="relative z-10 w-full container mx-auto px-6 md:px-16 grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-4">
+      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-4">
 
         {/* ── LEFT: Text ──────────────────────────────────── */}
         <div className="flex flex-col gap-6">
