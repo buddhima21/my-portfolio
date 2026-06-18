@@ -56,7 +56,7 @@ export default function ExpertiseSection() {
         <div className="mb-16">
           <span
             className="font-mono uppercase text-primary tracking-[0.28em]"
-            style={{ fontSize: '11px', fontWeight: 500 }}
+            style={{ fontSize: '11px', fontWeight: 600 }}
           >
             Expertise
           </span>

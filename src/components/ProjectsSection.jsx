@@ -61,7 +61,7 @@ export default function ProjectsSection() {
           <div>
             <span
               className="font-mono uppercase text-primary tracking-[0.28em]"
-              style={{ fontSize: '11px', fontWeight: 500 }}
+              style={{ fontSize: '11px', fontWeight: 600 }}
             >
               Selection
             </span>

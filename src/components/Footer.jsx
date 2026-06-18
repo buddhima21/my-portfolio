@@ -22,7 +22,7 @@ export default function Footer() {
             { label: 'LinkedIn', href: '#' },
             { label: 'GitHub',   href: '#' },
             { label: 'Twitter',  href: '#' },
-            { label: 'Email',    href: 'mailto:hello@buddhima.dev' },
+            { label: 'Email',    href: 'https://mail.google.com/mail/?view=cm&to=buddhimasandaru@gmail.com&su=Hello%20from%20your%20Portfolio' },
           ].map(({ label, href }) => (
             <a
               key={label}

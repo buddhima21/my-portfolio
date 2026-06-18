@@ -11,7 +11,7 @@ export default function AboutSection() {
         <div className="flex flex-col gap-6">
           <span
             className="font-mono uppercase text-primary tracking-[0.28em]"
-            style={{ fontSize: '11px', fontWeight: 500 }}
+            style={{ fontSize: '11px', fontWeight: 600 }}
           >
             Who I Am
           </span>
@@ -45,7 +45,7 @@ export default function AboutSection() {
           <div className="md:pr-14">
             <p
               className="font-mono uppercase tracking-widest mb-6"
-              style={{ fontSize: '10px', color: 'var(--color-primary, #818cf8)' }}
+              style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}
             >
               Focused On
             </p>
@@ -66,7 +66,7 @@ export default function AboutSection() {
           <div className="md:px-14">
             <p
               className="font-mono uppercase tracking-widest mb-6"
-              style={{ fontSize: '10px', color: '#67e8f9' }}
+              style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}
             >
               Learning
             </p>
@@ -87,7 +87,7 @@ export default function AboutSection() {
           <div className="md:pl-14">
             <p
               className="font-mono uppercase tracking-widest mb-6"
-              style={{ fontSize: '10px', color: '#fde047' }}
+              style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}
             >
               Beyond Tech
             </p>
