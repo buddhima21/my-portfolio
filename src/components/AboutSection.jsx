@@ -26,7 +26,7 @@ export default function AboutSection() {
             className="text-on-surface-variant leading-relaxed w-full"
             style={{ fontSize: '16px', lineHeight: 1.9 }}
           >
-            Currently pursuing a degree in Software Engineering with a CGPA of 3.44, I am
+            I am a Software Engineering Undergraduate at SLIIT, currently pursuing my degree with a CGPA of 3.44. I am
             continuously expanding my knowledge through academic studies, practical projects,
             and self-learning. My interests lie in software development, AI technologies, and
             cloud computing where I enjoy exploring innovative solutions and transforming

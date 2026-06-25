@@ -218,61 +218,58 @@ export default function HeroSection({
       <div className="hero-orb hero-orb--cyan"   aria-hidden="true" />
 
       {/* 2-column grid */}
-      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-10 md:gap-4">
+      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-8">
 
         {/* ── LEFT: Text ──────────────────────────────────── */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5">
 
-          {/* Availability badge */}
-          <div>
-            <span className="hero-badge">
-              <span className="hero-badge-dot" />
-              Available for Opportunities
-            </span>
-          </div>
 
           {/* Name headline */}
           <h1
-            className="text-on-surface font-bold leading-[1.1] tracking-[-0.03em]"
-            style={{ fontSize: 'clamp(32px, 4.5vw, 60px)' }}
+            className="text-on-surface font-bold leading-[1.08] tracking-[-0.03em]"
+            style={{ fontSize: 'clamp(36px, 4.8vw, 68px)' }}
           >
             Hi, I'm{' '}
-            <span className="hero-gradient-text">Buddhima Hewage</span>
-            ,<br />
-            <span
-              className="text-on-surface-variant font-semibold"
-              style={{ fontSize: 'clamp(22px, 3vw, 42px)' }}
-            >
-              Software Engineer Undergraduate
-            </span>
+            <span className="hero-gradient-text">Buddhima<br />Hewage</span>
           </h1>
 
+          {/* Subtitle line */}
+          <p
+            className="text-on-surface-variant font-medium"
+            style={{ fontSize: 'clamp(15px, 1.6vw, 20px)', letterSpacing: '-0.01em', opacity: 0.7 }}
+          >
+            Software Engineering Undergraduate · SLIIT
+          </p>
+
           {/* Typewriter */}
-          <div className="flex items-center gap-2 flex-wrap" style={{ fontSize: '16px' }}>
-            <span className="text-on-surface-variant font-mono opacity-70">I specialise as a</span>
-            <span className="hero-typewriter">
+          <div className="flex items-center gap-0" style={{ minHeight: '36px' }}>
+            <span className="hero-typewriter" style={{ fontSize: 'clamp(16px, 1.8vw, 22px)' }}>
               {role}
               <span className="hero-cursor" aria-hidden="true">|</span>
             </span>
           </div>
 
-          {/* Subtitle */}
-          <p className="text-on-surface-variant" style={{ fontSize: '15px', lineHeight: '1.8', maxWidth: '440px' }}>
+          {/* Description */}
+          <p
+            className="text-on-surface-variant"
+            style={{ fontSize: '15px', lineHeight: '1.8', maxWidth: '420px', opacity: 0.65 }}
+          >
             Driven by the intersection of computational efficiency and
             intelligent design — turning complex problems into elegant,
             scalable systems.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-3 pt-1">
+          <div className="flex flex-wrap gap-3 pt-2">
             <a id="hero-cta-primary"   href={ctaPrimary.href}   className="hero-btn-primary">{ctaPrimary.label}</a>
             <a id="hero-cta-secondary" href={ctaSecondary.href}  className="hero-btn-secondary">{ctaSecondary.label}</a>
           </div>
 
+
           {/* Scroll indicator */}
-          <div className="hidden md:flex items-center gap-3 pt-2 text-on-surface-variant">
+          <div className="hidden md:flex items-center gap-3 pt-1 text-on-surface-variant">
             <div className="hero-scroll-line" aria-hidden="true" />
-            <span className="font-mono uppercase tracking-[0.2em] opacity-50" style={{ fontSize: '10px' }}>
+            <span className="font-mono uppercase tracking-[0.2em] opacity-40" style={{ fontSize: '10px' }}>
               Scroll to explore
             </span>
           </div>

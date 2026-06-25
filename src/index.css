@@ -75,6 +75,16 @@
   opacity: 1;
 }
 
+/* ─── Project Card Shimmer ──────────────────────────────────── */
+@keyframes shimmerSweep {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
 /* ─── Nav link ─────────────────────────────────────────────── */
 .nav-link {
   position: relative;
@@ -168,6 +178,77 @@
 @keyframes termCursorBlink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
+}
+
+/* ─── Contact Reach Cards ───────────────────────────────────── */
+.contact-reach-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-top-color: rgba(255,255,255,0.12);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.contact-reach-card:hover {
+  background: rgba(255,255,255,0.065);
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+}
+
+.contact-reach-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+
+.contact-reach-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.contact-reach-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  letter-spacing: -0.01em;
+}
+
+.contact-reach-value {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-reach-arrow {
+  font-size: 16px;
+  color: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.contact-reach-card:hover .contact-reach-arrow {
+  color: rgba(255,255,255,0.6);
+  transform: translate(2px,-2px);
 }
 
 
@@ -265,6 +346,27 @@
   100% {
     box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
   }
+}
+
+/* Eyebrow label above headline */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(192, 193, 255, 0.65);
+}
+
+.hero-eyebrow-line {
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, #c0c1ff, transparent);
+  border-radius: 1px;
 }
 
 /* Typewriter */
