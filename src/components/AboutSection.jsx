@@ -16,8 +16,8 @@ export default function AboutSection() {
             Who I Am
           </span>
           <h2
-            className="text-on-surface font-semibold leading-tight"
-            style={{ fontSize: 'clamp(32px, 4vw, 42px)', letterSpacing: '-0.03em' }}
+            className="font-display text-on-surface font-semibold leading-tight"
+            style={{ fontSize: 'clamp(32px, 4vw, 42px)', letterSpacing: '-0.02em' }}
           >
             Building Through Education.
           </h2>

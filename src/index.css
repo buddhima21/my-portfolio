@@ -22,6 +22,10 @@
     font-family: 'Inter', sans-serif;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', sans-serif;
+  }
+
   ::selection {
     @apply bg-primary-container text-on-primary-container;
   }
@@ -371,7 +375,6 @@
 
 /* Typewriter */
 .hero-typewriter {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 17px;
   font-weight: 600;
   background: linear-gradient(90deg, #c0c1ff, #67e8f9);

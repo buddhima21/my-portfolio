@@ -226,11 +226,11 @@ export default function HeroSection({
 
           {/* Name headline */}
           <h1
-            className="text-on-surface font-bold leading-[1.08] tracking-[-0.03em]"
+            className="font-display text-on-surface font-bold leading-[1.08] tracking-[-0.02em]"
             style={{ fontSize: 'clamp(36px, 4.8vw, 68px)' }}
           >
             Hi, I'm{' '}
-            <span className="hero-gradient-text">Buddhima<br />Hewage</span>
+            <span className="hero-gradient-text font-black">Buddhima<br />Hewage</span>
           </h1>
 
           {/* Subtitle line */}
@@ -243,7 +243,7 @@ export default function HeroSection({
 
           {/* Typewriter */}
           <div className="flex items-center gap-0" style={{ minHeight: '36px' }}>
-            <span className="hero-typewriter" style={{ fontSize: 'clamp(16px, 1.8vw, 22px)' }}>
+            <span className="hero-typewriter font-display font-semibold" style={{ fontSize: 'clamp(16px, 1.8vw, 22px)' }}>
               {role}
               <span className="hero-cursor" aria-hidden="true">|</span>
             </span>

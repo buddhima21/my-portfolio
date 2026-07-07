@@ -30,6 +30,11 @@ export default {
       maxWidth: {
         'container-max': '1280px',
       },
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        heading: ['Sora', 'sans-serif'],
+        sans:    ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],

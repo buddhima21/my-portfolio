@@ -61,8 +61,8 @@ export default function ExpertiseSection() {
             Expertise
           </span>
           <h2
-            className="text-on-surface font-semibold mt-3"
-            style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.03em' }}
+            className="font-display text-on-surface font-semibold mt-3"
+            style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.02em' }}
           >
             Core Disciplines
           </h2>

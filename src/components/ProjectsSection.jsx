@@ -130,7 +130,7 @@ export default function ProjectsSection() {
       <div className="max-w-container-max mx-auto">
 
         {/* ── Header ─────────────────────────────────────────── */}
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <span
             className="font-mono uppercase text-primary tracking-[0.28em]"
             style={{ fontSize: '11px', fontWeight: 600 }}
@@ -138,13 +138,13 @@ export default function ProjectsSection() {
             Selection
           </span>
           <h2
-            className="text-on-surface font-semibold mt-3"
-            style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.03em' }}
+            className="font-display text-on-surface font-semibold mt-3"
+            style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.02em' }}
           >
             Featured Projects
           </h2>
           <p
-            className="mt-4 max-w-xl"
+            className="mt-4 max-w-xl mx-auto"
             style={{ fontSize: '15px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.7 }}
           >
             A curated selection of work spanning full-stack web, mobile, and machine learning.

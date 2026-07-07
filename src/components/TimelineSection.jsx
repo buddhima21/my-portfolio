@@ -173,10 +173,10 @@ export default function TimelineSection() {
             Trajectory
           </span>
           <h2
-            className="text-on-surface font-semibold mt-3"
-            style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.03em' }}
+            className="font-display text-on-surface font-semibold mt-3"
+            style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.02em' }}
           >
-            Journey &amp; Milestones
+            Journey & Milestones
           </h2>
           <div className="flex items-center justify-center gap-3 mt-4">
             <div style={{ width: '32px', height: '1px', background: 'linear-gradient(to right, transparent, rgba(103,232,249,0.4))' }} />
