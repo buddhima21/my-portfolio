@@ -173,7 +173,7 @@ export default function TimelineSection() {
             Trajectory
           </span>
           <h2
-            className="font-display text-on-surface font-semibold mt-3"
+            className="font-heading text-on-surface font-semibold mt-3"
             style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.02em' }}
           >
             Journey & Milestones
@@ -449,7 +449,7 @@ function TimelineItem({
           {/* Role */}
           <div className={`card-child relative ${isLeft ? 'md:text-right' : ''}`}>
             <h3
-              className="text-on-surface font-semibold leading-snug"
+              className="font-heading text-on-surface font-semibold leading-snug"
               style={{ fontSize: '18px', letterSpacing: '-0.02em' }}
             >
               {role}

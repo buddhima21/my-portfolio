@@ -138,7 +138,7 @@ export default function ProjectsSection() {
             Selection
           </span>
           <h2
-            className="font-display text-on-surface font-semibold mt-3"
+            className="font-heading text-on-surface font-semibold mt-3"
             style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.02em' }}
           >
             Featured Projects
@@ -329,6 +329,7 @@ function ProjectCard({
         <h3
           id={`project-${id}`}
           style={{
+            fontFamily: "'Sora', sans-serif",
             fontSize: '20px',
             fontWeight: 700,
             letterSpacing: '-0.025em',

@@ -22,8 +22,17 @@
     font-family: 'Inter', sans-serif;
   }
 
+  /* Structural headings default to Sora (font-heading) */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Sora', sans-serif;
+  }
+
+  /* Fraunces variable font — when font-display is applied, enable full
+     optical-size + weight range so wght 900 renders dramatically bolder */
+  .font-display {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-variation-settings: 'opsz' 72;
   }
 
   ::selection {

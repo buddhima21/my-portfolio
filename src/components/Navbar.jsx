@@ -49,8 +49,8 @@ export default function Navbar() {
       {/* Logo / Name */}
       <a
         href="#"
-        className="text-headline-lg font-bold tracking-tight text-on-surface hover:text-primary transition-colors duration-300"
-        style={{ fontSize: '20px', letterSpacing: '-0.02em' }}
+        className="font-heading font-bold tracking-tight text-on-surface hover:text-primary transition-colors duration-300"
+        style={{ fontSize: '20px', letterSpacing: '-0.03em' }}
       >
         BUDDHIMA PORTFOLIO
       </a>

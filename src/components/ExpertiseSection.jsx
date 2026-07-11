@@ -61,7 +61,7 @@ export default function ExpertiseSection() {
             Expertise
           </span>
           <h2
-            className="font-display text-on-surface font-semibold mt-3"
+            className="font-heading text-on-surface font-semibold mt-3"
             style={{ fontSize: 'clamp(32px, 4vw, 48px)', letterSpacing: '-0.02em' }}
           >
             Core Disciplines
@@ -93,7 +93,7 @@ function SkillCard({ icon, title, description }) {
 
       {/* Title */}
       <h3
-        className="text-on-surface font-semibold"
+        className="font-heading text-on-surface font-semibold"
         style={{ fontSize: '20px', letterSpacing: '-0.02em' }}
       >
         {title}

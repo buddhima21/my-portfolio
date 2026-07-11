@@ -138,7 +138,7 @@ export default function TechStackSection() {
             Capabilities
           </span>
           <h2
-            className="font-display text-white font-semibold mt-3 leading-tight"
+            className="font-heading text-white font-semibold mt-3 leading-tight"
             style={{ fontSize: 'clamp(30px, 4vw, 46px)', letterSpacing: '-0.02em' }}
           >
             Tech Stack

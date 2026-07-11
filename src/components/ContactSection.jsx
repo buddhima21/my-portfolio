@@ -381,11 +381,11 @@ export default function ContactSection() {
           </div>
 
           <h2
-            className="font-display"
+            className="font-heading"
             style={{
-              fontSize: 'clamp(2rem, 5vw, 3rem)',
+              fontSize: 'clamp(2rem, 5vw, 3.2rem)',
               fontWeight: 800,
-              letterSpacing: '-0.02em',
+              letterSpacing: '-0.03em',
               lineHeight: 1.1,
               color: 'rgba(255,255,255,0.95)',
               margin: '0 0 18px',
@@ -436,6 +436,7 @@ export default function ContactSection() {
             transition: 'opacity 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s, transform 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s',
           }}>
             <h3 style={{
+              fontFamily: "'Sora', sans-serif",
               fontSize: 18, fontWeight: 700,
               color: 'rgba(255,255,255,0.92)',
               letterSpacing: '-0.02em',

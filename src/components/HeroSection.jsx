@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import ShaderBackground from './ShaderBackground';
-import profileImg from '../assets/profile.jpg';
 
 /* ─── Typewriter hook ──────────────────────────────────────────
    Cycles through `words` array: types → pauses → deletes → next
@@ -52,137 +51,6 @@ function LinkedInIcon() {
   );
 }
 
-/* ─── ProfileCard ──────────────────────────────────────────────
-   Layered glass card stack, hanging from a belt/clip visual.
-
-   PHYSICS: spring-pendulum fires ONLY when mouse is inside the
-   right-column wrapper (pc-wrap), never the whole window.
-   When the mouse leaves, targets spring back to 0 automatically.
-   Photo is slightly zoomed to clarify the face.
-───────────────────────────────────────────────────────────── */
-function ProfileCard({ img }) {
-  const wrapRef  = useRef(null);  // right-col wrapper — mouse zone
-  const outerRef = useRef(null);  // pendulum pivot — receives CSS vars
-
-  useEffect(() => {
-    const wrap  = wrapRef.current;
-    const outer = outerRef.current;
-    if (!wrap || !outer) return;
-
-    /* Spring physics state */
-    let rz = 0, rx = 0;      // current rotation: Z = swing, X = tilt
-    let vz = 0, vx = 0;      // velocity
-    let tZ = 0, tX = 0;      // target rotation
-    const DAMP  = 0.80;       // damping  — lower = bouncier
-    const STIFF = 0.055;      // stiffness — lower = lazier spring
-    let raf;
-
-    /* Mouse within right column only */
-    const onMove = (e) => {
-      const rect = outer.getBoundingClientRect();
-      const cx   = rect.left + rect.width  / 2;
-      const cy   = rect.top;                        // pivot at TOP edge
-      const nx   = (e.clientX - cx) / (rect.width  / 2);   // −1 → +1
-      const ny   = (e.clientY - cy) / (rect.height / 2);   //  0 → +1
-      tZ =  nx * 13;  // pendulum swing ±13°
-      tX = -ny * 5;   // slight tilt ±5°
-    };
-
-    /* Leaving right column → spring back */
-    const onLeave = () => { tZ = 0; tX = 0; };
-
-    /* RAF spring loop — runs every frame regardless of mouse position */
-    function tick() {
-      vz = (vz + (tZ - rz) * STIFF) * DAMP;
-      vx = (vx + (tX - rx) * STIFF) * DAMP;
-      rz += vz;
-      rx += vx;
-      outer.style.setProperty('--rz', `${rz}deg`);
-      outer.style.setProperty('--rx', `${rx}deg`);
-      raf = requestAnimationFrame(tick);
-    }
-
-    wrap.addEventListener('mousemove', onMove,  { passive: true });
-    wrap.addEventListener('mouseleave', onLeave);
-    raf = requestAnimationFrame(tick);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      wrap.removeEventListener('mousemove', onMove);
-      wrap.removeEventListener('mouseleave', onLeave);
-    };
-  }, []);
-
-  return (
-    /* Full right-column hit zone */
-    <div ref={wrapRef} className="pc-wrap">
-
-      {/* Pendulum pivot — everything below hangs from this point */}
-      <div ref={outerRef} className="pc-outer">
-
-        {/* ── Belt / clip visual ─────────────────────────────── */}
-        <div className="pc-belt" aria-hidden="true">
-          {/* Horizontal bar (the "belt") */}
-          <div className="pc-belt-bar">
-            <span className="pc-belt-rivet pc-belt-rivet--l" />
-            <span className="pc-belt-rivet pc-belt-rivet--r" />
-          </div>
-          {/* Metal hook hanging from bar */}
-          <div className="pc-belt-hook">
-            <span className="pc-belt-arch" />
-          </div>
-          {/* Thread from hook to card top */}
-          <div className="pc-belt-thread" />
-        </div>
-
-        {/* ── Card stack ──────────────────────────────────────── */}
-        <div className="pc-scene">
-
-          {/* Back card — accent gradient */}
-          <div className="pc-card pc-card--back" aria-hidden="true">
-            <div className="pc-card-inner">
-              <span className="pc-tag">Software Engineer</span>
-              <span className="pc-tag pc-tag--accent">Open Source</span>
-            </div>
-            <div className="pc-card-gradient" />
-          </div>
-
-          {/* Mid card — glass */}
-          <div className="pc-card pc-card--mid" aria-hidden="true">
-            <div className="pc-card-inner pc-card-inner--mid">
-              <span className="pc-tag">Cloud ☁️</span>
-              <span className="pc-tag pc-tag--cyan">Full-Stack</span>
-            </div>
-          </div>
-
-          {/* Front card — photo */}
-          <div className="pc-card pc-card--front">
-            <img
-              src={img}
-              alt="Buddhima Hewage — Software Engineer"
-              className="pc-photo"
-              draggable={false}
-            />
-            <div className="pc-shimmer" aria-hidden="true" />
-          </div>
-
-          {/* Open-to-Work chip — top-left */}
-          <div className="profile-status-chip" aria-label="Open to work">
-            <span className="profile-status-dot" />
-            Open to Work
-          </div>
-
-          {/* Name tag — bottom-right */}
-          <div className="pc-name-tag" aria-hidden="true">
-            <span className="pc-name-tag-line" />
-            <span>Buddhima Hewage</span>
-          </div>
-
-        </div>{/* /pc-scene */}
-      </div>{/* /pc-outer */}
-    </div>   /* /pc-wrap */
-  );
-}
 
 /* ─── HeroSection ──────────────────────────────────────────── */
 export default function HeroSection({
@@ -190,6 +58,7 @@ export default function HeroSection({
   ctaSecondary = { label: 'Contact Me',   href: '#contact'  },
   githubUrl    = 'https://github.com/Buddhima21',
   linkedinUrl  = 'https://www.linkedin.com/in/buddhima-hewage',
+  heroAnchorRef,
 }) {
   const role = useTypewriter(ROLES);
 
@@ -224,13 +93,21 @@ export default function HeroSection({
         <div className="flex flex-col gap-5">
 
 
-          {/* Name headline */}
+          {/* Name headline — Sora, no italic, matching project card style */}
           <h1
-            className="font-display text-on-surface font-bold leading-[1.08] tracking-[-0.02em]"
-            style={{ fontSize: 'clamp(36px, 4.8vw, 68px)' }}
+            className="font-heading text-on-surface leading-[1.05] tracking-[-0.03em]"
+            style={{
+              fontSize: 'clamp(36px, 4.8vw, 68px)',
+              fontWeight: 700,
+            }}
           >
             Hi, I'm{' '}
-            <span className="hero-gradient-text font-black">Buddhima<br />Hewage</span>
+            <span
+              className="hero-gradient-text"
+              style={{ fontWeight: 800 }}
+            >
+              Buddhima<br />Hewage
+            </span>
           </h1>
 
           {/* Subtitle line */}
@@ -241,9 +118,16 @@ export default function HeroSection({
             Software Engineering Undergraduate · SLIIT
           </p>
 
-          {/* Typewriter */}
+          {/* Typewriter — Fraunces weight 600 for cinematic role cycling */}
           <div className="flex items-center gap-0" style={{ minHeight: '36px' }}>
-            <span className="hero-typewriter font-display font-semibold" style={{ fontSize: 'clamp(16px, 1.8vw, 22px)' }}>
+            <span
+              className="hero-typewriter font-display"
+              style={{
+                fontSize: 'clamp(16px, 1.8vw, 22px)',
+                fontWeight: 600,
+                fontVariationSettings: "'opsz' 36",
+              }}
+            >
               {role}
               <span className="hero-cursor" aria-hidden="true">|</span>
             </span>
@@ -275,9 +159,15 @@ export default function HeroSection({
           </div>
         </div>
 
-        {/* ── RIGHT: Hanging card stack ───────────────────── */}
+        {/* ── RIGHT: Anchor for floating card ──────────── */}
         <div className="hidden md:flex items-center justify-center">
-          <ProfileCard img={profileImg} />
+          {/* Transparent placeholder — same size as ProfileCard.
+              FloatingProfileCard reads this rect as its start position. */}
+          <div
+            ref={heroAnchorRef}
+            style={{ width: 280, height: 420, pointerEvents: 'none' }}
+            aria-hidden="true"
+          />
         </div>
 
       </div>
