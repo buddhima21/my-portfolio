@@ -90,7 +90,7 @@ export default function HeroSection({
       <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-8">
 
         {/* ── LEFT: Text ──────────────────────────────────── */}
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-5">
 
 
           {/* Name headline — Sora, no italic, matching project card style */}
@@ -119,7 +119,7 @@ export default function HeroSection({
           </p>
 
           {/* Typewriter — Fraunces weight 600 for cinematic role cycling */}
-          <div className="flex items-center gap-0" style={{ minHeight: '36px' }}>
+          <div className="flex items-center justify-center md:justify-start gap-0 w-full" style={{ minHeight: '36px' }}>
             <span
               className="hero-typewriter font-display"
               style={{
@@ -135,7 +135,7 @@ export default function HeroSection({
 
           {/* Description */}
           <p
-            className="text-on-surface-variant"
+            className="text-on-surface-variant mx-auto md:mx-0"
             style={{ fontSize: '15px', lineHeight: '1.8', maxWidth: '420px', opacity: 0.65 }}
           >
             Driven by the intersection of computational efficiency and
@@ -144,7 +144,7 @@ export default function HeroSection({
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-3 pt-2">
+          <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2 w-full">
             <a id="hero-cta-primary"   href={ctaPrimary.href}   className="hero-btn-primary">{ctaPrimary.label}</a>
             <a id="hero-cta-secondary" href={ctaSecondary.href}  className="hero-btn-secondary">{ctaSecondary.label}</a>
           </div>

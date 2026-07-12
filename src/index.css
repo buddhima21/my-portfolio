@@ -12,7 +12,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -38,6 +37,13 @@
   ::selection {
     @apply bg-primary-container text-on-primary-container;
   }
+}
+
+/* ─── Custom Cursor ────────────────────────────────────────── */
+/* Applied by CustomCursor.jsx on mount */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
 }
 
 /* ─── Material Symbols ─────────────────────────────────────── */

@@ -1,17 +1,26 @@
-import { useEffect, useRef } from 'react';
-import { useScrollReveal }  from './hooks/useScrollReveal';
-import Navbar               from './components/Navbar';
-import HeroSection          from './components/HeroSection';
-import AboutSection         from './components/AboutSection';
-import TechStackSection     from './components/TechStackSection';
-import ProjectsSection      from './components/ProjectsSection';
-import TimelineSection      from './components/TimelineSection';
-import ContactSection       from './components/ContactSection';
-import Footer               from './components/Footer';
-import FloatingProfileCard  from './components/FloatingProfileCard';
+﻿import { useEffect, useRef, useState } from "react";
+import { AnimatePresence }             from "framer-motion";
+import { useScrollReveal }             from "./hooks/useScrollReveal";
+import { useLenis }                    from "./hooks/useLenis";
+import Navbar                          from "./components/Navbar";
+import HeroSection                     from "./components/HeroSection";
+import AboutSection                    from "./components/AboutSection";
+import TechStackSection                from "./components/TechStackSection";
+import ProjectsSection                 from "./components/ProjectsSection";
+import TimelineSection                 from "./components/TimelineSection";
+import ContactSection                  from "./components/ContactSection";
+import Footer                          from "./components/Footer";
+import FloatingProfileCard             from "./components/FloatingProfileCard";
+import Preloader                       from "./components/Preloader";
+import CustomCursor                    from "./components/CustomCursor";
 
 export default function App() {
-  // Activate scroll-reveal animations
+  const [loaded, setLoaded] = useState(false);
+
+  // Smooth scroll — Lenis
+  useLenis();
+
+  // Scroll-reveal animations (fires after load)
   useScrollReveal(120);
 
   /* Refs for the two anchor positions the floating card transitions between */
@@ -21,18 +30,29 @@ export default function App() {
   // Global mouse-follow glow for glass cards
   useEffect(() => {
     const handler = (e) => {
-      document.querySelectorAll('.glass-card').forEach((card) => {
+      document.querySelectorAll(".glass-card").forEach((card) => {
         const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+        card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+        card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
       });
     };
-    window.addEventListener('mousemove', handler, { passive: true });
-    return () => window.removeEventListener('mousemove', handler);
+    window.addEventListener("mousemove", handler, { passive: true });
+    return () => window.removeEventListener("mousemove", handler);
   }, []);
 
   return (
     <>
+      {/* ── Custom cursor (always on top) ──────────────────── */}
+      <CustomCursor />
+
+      {/* ── Cinematic preloader ────────────────────────────── */}
+      <AnimatePresence>
+        {!loaded && (
+          <Preloader key="preloader" onComplete={() => setLoaded(true)} />
+        )}
+      </AnimatePresence>
+
+      {/* ── Main portfolio ─────────────────────────────────── */}
       <Navbar />
       <main>
         <HeroSection  heroAnchorRef={heroAnchorRef} />
@@ -44,7 +64,7 @@ export default function App() {
       </main>
       <Footer />
 
-      {/* Floating profile card — rendered as a portal, transitions between hero and about */}
+      {/* Floating profile card — portal, transitions between hero and about */}
       <FloatingProfileCard
         heroAnchorRef={heroAnchorRef}
         aboutAnchorRef={aboutAnchorRef}
