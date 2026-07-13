@@ -8,8 +8,8 @@ const ROLES = ['Full-Stack Developer', 'Cloud Solutions Architect', 'ML Enthusia
 
 function useTypewriter(words, typingSpeed = 75, deletingSpeed = 40, pauseMs = 1800) {
   const [displayed, setDisplayed] = useState('');
-  const [wordIdx, setWordIdx]     = useState(0);
-  const [phase, setPhase]         = useState('typing');
+  const [wordIdx, setWordIdx] = useState(0);
+  const [phase, setPhase] = useState('typing');
 
   useEffect(() => {
     const word = words[wordIdx % words.length];
@@ -54,10 +54,10 @@ function LinkedInIcon() {
 
 /* ─── HeroSection ──────────────────────────────────────────── */
 export default function HeroSection({
-  ctaPrimary   = { label: 'View Projects', href: '#projects' },
-  ctaSecondary = { label: 'Contact Me',   href: '#contact'  },
-  githubUrl    = 'https://github.com/Buddhima21',
-  linkedinUrl  = 'https://www.linkedin.com/in/buddhima-hewage',
+  ctaPrimary = { label: 'View Projects', href: '#projects' },
+  ctaSecondary = { label: 'Contact Me', href: '#contact' },
+  githubUrl = 'https://github.com/Buddhima21',
+  linkedinUrl = 'https://www.linkedin.com/in/buddhima-hewage',
   heroAnchorRef,
 }) {
   const role = useTypewriter(ROLES);
@@ -84,10 +84,10 @@ export default function HeroSection({
 
       {/* Decorative orbs */}
       <div className="hero-orb hero-orb--purple" aria-hidden="true" />
-      <div className="hero-orb hero-orb--cyan"   aria-hidden="true" />
+      <div className="hero-orb hero-orb--cyan" aria-hidden="true" />
 
       {/* 2-column grid */}
-      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-8">
+      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-8 mt-20 md:mt-24">
 
         {/* ── LEFT: Text ──────────────────────────────────── */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-5">
@@ -139,14 +139,14 @@ export default function HeroSection({
             style={{ fontSize: '15px', lineHeight: '1.8', maxWidth: '420px', opacity: 0.65 }}
           >
             Driven by the intersection of computational efficiency and
-            intelligent design — turning complex problems into elegant,
+            intelligent design, turning complex problems into elegant,
             scalable systems.
           </p>
 
           {/* CTAs */}
           <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2 w-full">
-            <a id="hero-cta-primary"   href={ctaPrimary.href}   className="hero-btn-primary">{ctaPrimary.label}</a>
-            <a id="hero-cta-secondary" href={ctaSecondary.href}  className="hero-btn-secondary">{ctaSecondary.label}</a>
+            <a id="hero-cta-primary" href={ctaPrimary.href} className="hero-btn-primary">{ctaPrimary.label}</a>
+            <a id="hero-cta-secondary" href={ctaSecondary.href} className="hero-btn-secondary">{ctaSecondary.label}</a>
           </div>
 
 

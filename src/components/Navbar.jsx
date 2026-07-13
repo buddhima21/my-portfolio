@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
  * Navbar — sticky top navigation bar.
@@ -6,9 +6,8 @@
  */
 
 const NAV_LINKS = [
+  { label: 'About', href: '#about' },
   { label: 'Projects', href: '#projects' },
-  { label: 'Tech Stack', href: '#techstack' },
-  { label: 'Timeline', href: '#timeline' },
   { label: 'Contact', href: '#contact' },
 ];
 

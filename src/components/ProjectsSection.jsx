@@ -7,10 +7,21 @@
  * accent: a CSS color used for the card's glow and tag highlight
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import ProjectModal from './ProjectModal';
 import rentEaseImg from '../assets/rentease.png';
 import renteaseAppImg from '../assets/renteaseApp.png';
 import smileDentalImg from '../assets/smiledental.png';
+
+// RentEase Gallery Images
+import rentEaseImg1 from '../assets/rentease/rentease1.jpg';
+import rentEaseImg2 from '../assets/rentease/rentease2.jpg';
+import rentEaseImg3 from '../assets/rentease/rentease3.jpg';
+import rentEaseImg4 from '../assets/rentease/rentease4.jpg';
+import rentEaseImg5 from '../assets/rentease/rentease5.jpg';
+import rentEaseImg6 from '../assets/rentease/rentease6.jpg';
+import rentEaseImg7 from '../assets/rentease/rentease7.jpg';
+import rentEaseImg8 from '../assets/rentease/rentease8.jpg';
 
 const PROJECTS = [
   {
@@ -19,8 +30,48 @@ const PROJECTS = [
     emoji: '🏠',
     description:
       'A full-stack rental property management platform serving tenants, property owners, and administrators. Features interactive map-based listings, maintenance request workflows, secure JWT authentication, real-time notifications, and an AI chatbot.',
+    details: (
+      <div className="space-y-4 text-on-surface-variant text-sm md:text-base leading-relaxed">
+        <p>
+          RentEase is a modern, full-stack rental property management platform designed to revolutionize the way tenants, property owners, and administrators interact with real estate. Moving beyond traditional listings, it integrates intelligent automation and interactive tools to create a seamless, end-to-end rental experience.
+        </p>
+        <p>
+          At its core, RentEase features a robust Property Listing and Lifecycle Management module. Users can explore available properties through an intuitive, location-aware map interface, making property discovery both visual and highly contextual. 
+        </p>
+        <p>
+          To further enhance the user experience, the platform integrates an AI-powered chatbot that acts as a virtual assistant, helping users find their ideal homes based on natural language queries and preferences.
+        </p>
+        <div className="mt-4">
+          <strong className="text-on-surface text-base">🔹 Key Features:</strong>
+          <ul className="list-disc pl-5 mt-2 space-y-1">
+            <li>Interactive map-based property visualization for location-aware browsing 📍</li>
+            <li>AI-powered virtual assistant for intelligent property discovery 🤖</li>
+            <li>Comprehensive admin moderation workflows for property approvals</li>
+            <li>Secure authentication and authorization using JWT with Role-Based Access Control (Admin, Owner, Tenant) 🔐</li>
+            <li>End-to-end digital lifecycle: from booking to agreement management and maintenance requests</li>
+          </ul>
+        </div>
+        <div className="mt-4">
+          <strong className="text-on-surface text-base">🔹 Technologies Used:</strong>
+          <p className="mt-1">React, Spring Boot, MongoDB, REST APIs, JWT Authentication, AI API Integration, Map Integration</p>
+        </div>
+        <p className="italic mt-4 border-l-2 border-primary/50 pl-4 py-1 text-on-surface/80">
+          Built with scalability and user-centric design in mind, RentEase bridges the gap between property management workflows and modern consumer expectations.
+        </p>
+      </div>
+    ),
     tags: ['React', 'Vite', 'Spring Boot', 'MongoDB', 'Tailwind CSS'],
     image: rentEaseImg,
+    gallery: [
+      rentEaseImg1,
+      rentEaseImg2,
+      rentEaseImg3,
+      rentEaseImg4,
+      rentEaseImg5,
+      rentEaseImg6,
+      rentEaseImg7,
+      rentEaseImg8,
+    ],
     imageAlt: 'RentEase — full-stack rental property management platform',
     sourceUrl: 'https://github.com/buddhima21/RentEase',
     liveUrl: '#',
@@ -74,6 +125,7 @@ const STAGGER_DELAYS = ['0ms', '120ms', '240ms', '360ms'];
 export default function ProjectsSection() {
   const sectionRef = useRef(null);
   const cardRefs = useRef([]);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   /* ── Mouse-tilt effect on each card ─────────────────────── */
   useEffect(() => {
@@ -162,10 +214,19 @@ export default function ProjectsSection() {
               {...project}
               delay={STAGGER_DELAYS[i]}
               cardRef={(el) => (cardRefs.current[i] = el)}
+              onClick={() => setSelectedProject(project)}
             />
           ))}
         </div>
       </div>
+
+      {/* ── Modal ────────────────────────────────────────────── */}
+      {selectedProject && (
+        <ProjectModal 
+          project={selectedProject} 
+          onClose={() => setSelectedProject(null)} 
+        />
+      )}
     </section>
   );
 }
@@ -173,11 +234,12 @@ export default function ProjectsSection() {
 /* ─── Individual Glass Card ────────────────────────────────── */
 function ProjectCard({
   id, title, emoji, description, tags, image, imageAlt,
-  sourceUrl, liveUrl, accent, delay, cardRef,
+  sourceUrl, liveUrl, accent, delay, cardRef, onClick
 }) {
   return (
     <article
       ref={cardRef}
+      onClick={onClick}
       aria-labelledby={`project-${id}`}
       className="project-glass-card group"
       style={{
@@ -194,7 +256,7 @@ function ProjectCard({
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         boxShadow: '0 8px 40px rgba(0,0,0,0.35)',
-        cursor: 'default',
+        cursor: 'pointer',
         minHeight: '420px',
         display: 'flex',
         flexDirection: 'column',
@@ -389,6 +451,7 @@ function ProjectCard({
             href={sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             aria-label={`View source code for ${title}`}
             style={{
               display: 'inline-flex',
@@ -414,6 +477,7 @@ function ProjectCard({
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             aria-label={`View live demo for ${title}`}
             style={{
               display: 'inline-flex',
@@ -440,6 +504,7 @@ function ProjectCard({
             href={sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             aria-label={`Open ${title}`}
             style={{
               marginLeft: 'auto',
