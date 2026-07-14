@@ -1,4 +1,6 @@
-export default function AboutSection({ aboutAnchorRef }) {
+import profileImg from '../assets/profile.jpg';
+
+export default function AboutSection() {
   return (
     <section
       id="about"
@@ -7,24 +9,61 @@ export default function AboutSection({ aboutAnchorRef }) {
     >
       <div className="max-w-5xl mx-auto flex flex-col gap-20">
 
-        {/* ── Top row: photo anchor (left) + header & bio (right) ── */}
+        {/* ── Top row: photo (left) + header & bio (right) ── */}
         <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-start">
 
-          {/* LEFT — anchor where the floating card lands */}
+          {/* LEFT — profile photo card */}
           <div className="hidden md:block flex-shrink-0">
             <div
-              ref={aboutAnchorRef}
               style={{
                 width: 220,
                 height: 280,
                 borderRadius: 24,
-                /* Faint ghost so layout stays stable before card arrives */
-                background: 'rgba(255,255,255,0.02)',
-                border: '1px dashed rgba(255,255,255,0.06)',
+                overflow: 'hidden',
+                position: 'relative',
+                border: '1px solid rgba(192,193,255,0.15)',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)',
               }}
-              aria-hidden="true"
-            />
+            >
+              <img
+                src={profileImg}
+                alt="Buddhima Hewage"
+                draggable={false}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: '50% 15%',
+                  display: 'block',
+                }}
+              />
+              {/* Bottom gradient */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(10,10,18,0.55) 0%, transparent 60%)',
+              }} />
+              {/* Open-to-work chip */}
+              <div style={{
+                position: 'absolute', bottom: 14, left: 14,
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                padding: '5px 12px', borderRadius: 100,
+                background: 'rgba(10,10,18,0.88)',
+                border: '1px solid rgba(74,222,128,0.3)',
+                backdropFilter: 'blur(14px)',
+                fontSize: 11, fontWeight: 500,
+                color: 'rgba(255,255,255,0.85)',
+                whiteSpace: 'nowrap',
+              }}>
+                <span style={{
+                  display: 'inline-block', width: 7, height: 7, borderRadius: '50%',
+                  background: '#4ade80',
+                  animation: 'statusPulse 2s ease-out infinite',
+                }} />
+                Open to Work
+              </div>
+            </div>
           </div>
+
 
           {/* RIGHT — text content */}
           <div className="flex flex-col gap-6 flex-1">

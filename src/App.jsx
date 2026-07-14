@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence }             from "framer-motion";
-import { useScrollReveal }             from "./hooks/useScrollReveal";
-import { useLenis }                    from "./hooks/useLenis";
-import Navbar                          from "./components/Navbar";
-import HeroSection                     from "./components/HeroSection";
-import AboutSection                    from "./components/AboutSection";
-import TechStackSection                from "./components/TechStackSection";
-import ProjectsSection                 from "./components/ProjectsSection";
-import TimelineSection                 from "./components/TimelineSection";
-import ContactSection                  from "./components/ContactSection";
-import Footer                          from "./components/Footer";
-import FloatingProfileCard             from "./components/FloatingProfileCard";
-import Preloader                       from "./components/Preloader";
-import CustomCursor                    from "./components/CustomCursor";
-import LineSidebar                     from "./components/LineSidebar";
+import { useEffect, useState } from "react";
+import { AnimatePresence }  from "framer-motion";
+import { useScrollReveal }  from "./hooks/useScrollReveal";
+import { useLenis }         from "./hooks/useLenis";
+import Navbar               from "./components/Navbar";
+import HeroSection          from "./components/HeroSection";
+import AboutSection         from "./components/AboutSection";
+import TechStackSection     from "./components/TechStackSection";
+import ProjectsSection      from "./components/ProjectsSection";
+import TimelineSection      from "./components/TimelineSection";
+import ContactSection       from "./components/ContactSection";
+import Footer               from "./components/Footer";
+import Preloader            from "./components/Preloader";
+import CustomCursor         from "./components/CustomCursor";
+import LineSidebar          from "./components/LineSidebar";
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -25,9 +24,7 @@ export default function App() {
   // Scroll-reveal animations (fires after load)
   useScrollReveal(120);
 
-  /* Refs for the two anchor positions the floating card transitions between */
-  const heroAnchorRef  = useRef(null);
-  const aboutAnchorRef = useRef(null);
+
 
   // Global mouse-follow glow for glass cards
   useEffect(() => {
@@ -83,23 +80,35 @@ export default function App() {
       
       {/* ── Side Navigation (Desktop only) ─────────────────── */}
       <div 
-        className={`fixed left-4 xl:left-8 top-1/2 -translate-y-1/2 z-40 hidden lg:block transition-all duration-500 ease-in-out ${
-          activeSection === 0 ? 'opacity-0 -translate-x-10 pointer-events-none' : 'opacity-100 translate-x-0'
-        }`}
+        style={{
+          position: 'fixed',
+          left: '12px',
+          top: '50%',
+          transform: activeSection === 0
+            ? 'translateY(-50%) translateX(-60px)'
+            : 'translateY(-50%) translateX(0)',
+          zIndex: 40,
+          opacity: activeSection === 0 ? 0 : 1,
+          pointerEvents: activeSection === 0 ? 'none' : 'auto',
+          transition: 'opacity 0.5s ease, transform 0.5s ease',
+        }}
+        className="hidden lg:block"
       >
         <LineSidebar
           items={['Hero', 'About', 'Tech Stack', 'Projects', 'Timeline', 'Contact']}
           activeIndex={activeSection}
           accentColor="#6366f1"
-          textColor="#a1a1aa"
-          markerColor="#3f3f46"
-          showIndex={true}
+          textColor="#52525b"
+          markerColor="#27272a"
+          showIndex={false}
           showMarker={true}
-          proximityRadius={0}
-          fontSize={0.7}
-          markerLength={20}
-          maxShift={10}
-          itemGap={10}
+          proximityRadius={80}
+          fontSize={0.65}
+          markerLength={24}
+          markerGap={6}
+          maxShift={8}
+          itemGap={14}
+          tickScale={0.4}
           onItemClick={(index) => {
             const sections = ['hero', 'about', 'techstack', 'projects', 'timeline', 'contact'];
             const target = document.getElementById(sections[index]);
@@ -111,8 +120,8 @@ export default function App() {
       </div>
 
       <main>
-        <HeroSection  heroAnchorRef={heroAnchorRef} />
-        <AboutSection aboutAnchorRef={aboutAnchorRef} />
+        <HeroSection />
+        <AboutSection />
         <TechStackSection />
         <ProjectsSection />
         <TimelineSection />
@@ -120,11 +129,7 @@ export default function App() {
       </main>
       <Footer />
 
-      {/* Floating profile card — portal, transitions between hero and about */}
-      <FloatingProfileCard
-        heroAnchorRef={heroAnchorRef}
-        aboutAnchorRef={aboutAnchorRef}
-      />
+
     </>
   );
 }

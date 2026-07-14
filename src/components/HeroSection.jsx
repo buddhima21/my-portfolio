@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import ShaderBackground from './ShaderBackground';
+import Lanyard from './Lanyard';
+import profileImg from '../assets/profile.jpg';
 
 /* ─── Typewriter hook ──────────────────────────────────────────
    Cycles through `words` array: types → pauses → deletes → next
@@ -58,7 +60,6 @@ export default function HeroSection({
   ctaSecondary = { label: 'Contact Me', href: '#contact' },
   githubUrl = 'https://github.com/Buddhima21',
   linkedinUrl = 'https://www.linkedin.com/in/buddhima-hewage',
-  heroAnchorRef,
 }) {
   const role = useTypewriter(ROLES);
 
@@ -92,8 +93,7 @@ export default function HeroSection({
         {/* ── LEFT: Text ──────────────────────────────────── */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left gap-5">
 
-
-          {/* Name headline — Sora, no italic, matching project card style */}
+          {/* Name headline */}
           <h1
             className="font-heading text-on-surface leading-[1.05] tracking-[-0.03em]"
             style={{
@@ -118,7 +118,7 @@ export default function HeroSection({
             Software Engineering Undergraduate · SLIIT
           </p>
 
-          {/* Typewriter — Fraunces weight 600 for cinematic role cycling */}
+          {/* Typewriter */}
           <div className="flex items-center justify-center md:justify-start gap-0 w-full" style={{ minHeight: '36px' }}>
             <span
               className="hero-typewriter font-display"
@@ -149,7 +149,6 @@ export default function HeroSection({
             <a id="hero-cta-secondary" href={ctaSecondary.href} className="hero-btn-secondary">{ctaSecondary.label}</a>
           </div>
 
-
           {/* Scroll indicator */}
           <div className="hidden md:flex items-center gap-3 pt-1 text-on-surface-variant">
             <div className="hero-scroll-line" aria-hidden="true" />
@@ -159,14 +158,19 @@ export default function HeroSection({
           </div>
         </div>
 
-        {/* ── RIGHT: Anchor for floating card ──────────── */}
-        <div className="hidden md:flex items-center justify-center">
-          {/* Transparent placeholder — same size as ProfileCard.
-              FloatingProfileCard reads this rect as its start position. */}
-          <div
-            ref={heroAnchorRef}
-            style={{ width: 280, height: 420, pointerEvents: 'none' }}
-            aria-hidden="true"
+        {/* ── RIGHT: Interactive 3D Lanyard card ──────────── */}
+        <div
+          className="hidden md:block"
+          style={{ width: '100%', height: '90vh', maxHeight: '720px' }}
+        >
+          <Lanyard
+            position={[0, 0, 18]}
+            gravity={[0, -40, 0]}
+            fov={10}
+            transparent={true}
+            frontImage={profileImg}
+            imageFit="cover"
+            lanyardWidth={1}
           />
         </div>
 

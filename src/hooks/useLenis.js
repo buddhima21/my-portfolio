@@ -1,4 +1,4 @@
-﻿import { useEffect } from "react";
+import { useEffect } from "react";
 import Lenis from "lenis";
 
 /* ─────────────────────────────────────────────────────────────
@@ -18,9 +18,14 @@ export function useLenis() {
       touchMultiplier: 2,
     });
 
-    // Forward lenis scroll events so IntersectionObserver / scroll listeners still fire
+    // Forward lenis scroll events so IntersectionObserver / scroll listeners still fire.
+    // Guard flag prevents re-entrancy (Lenis scroll → dispatched Event → Lenis scroll → …).
+    let dispatching = false;
     lenis.on("scroll", () => {
+      if (dispatching) return;
+      dispatching = true;
       window.dispatchEvent(new Event("scroll", { bubbles: false }));
+      dispatching = false;
     });
 
     let raf;
