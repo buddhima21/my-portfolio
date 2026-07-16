@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { gsap } from '../hooks/useGSAP';
 
 /* ── Tech Icons ──────────────────────────────────────────── */
 const ICONS = [
@@ -47,41 +48,52 @@ function TechCard({ name, src }) {
 
 /* ── Main Section ────────────────────────────────────────────── */
 export default function TechStackSection() {
-  const sectionRef = useRef(null);
+  const sectionRef  = useRef(null);
+  const headerRef   = useRef(null);
+  const marqueeRef  = useRef(null);
 
   useEffect(() => {
-    const el = sectionRef.current?.querySelector('.ts-reveal');
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add('ts-visible');
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
+    const ctx = gsap.context(() => {
+      /* Header stagger */
+      if (headerRef.current) {
+        gsap.fromTo(headerRef.current.children,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out',
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+      /* Marquee fade in */
+      if (marqueeRef.current) {
+        gsap.fromTo(marqueeRef.current,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1, y: 0, duration: 1, ease: 'power2.out',
+            scrollTrigger: {
+              trigger: marqueeRef.current,
+              start: 'top 88%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+    }, sectionRef);
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
       id="techstack"
       ref={sectionRef}
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 overflow-hidden section-sep"
       aria-label="Tech stack"
     >
       <style>{`
-        /* ── Reveal ── */
-        .ts-reveal {
-          opacity: 0;
-          transform: translateY(22px);
-          transition: opacity 0.8s cubic-bezier(.22,1,.36,1),
-                      transform 0.8s cubic-bezier(.22,1,.36,1);
-        }
-        .ts-visible { opacity: 1; transform: translateY(0); }
-
         /* ── Marquee Keyframes ── */
         @keyframes scrollLeftToRight {
           from { transform: translateX(-50%); }
@@ -127,10 +139,10 @@ export default function TechStackSection() {
         }
       `}</style>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-20 ts-reveal">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-20">
 
         {/* Header */}
-        <div className="mb-16 text-center">
+        <div ref={headerRef} className="mb-16 text-center">
           <span
             className="font-mono uppercase text-teal-400 tracking-[0.28em]"
             style={{ fontSize: '11px', fontWeight: 500 }}
@@ -152,7 +164,7 @@ export default function TechStackSection() {
         </div>
 
         {/* Marquee Area */}
-        <div className="marquee-container">
+        <div ref={marqueeRef} className="marquee-container">
 
           {/* Row 1: Left to Right */}
           <div className="marquee-track track-ltr">

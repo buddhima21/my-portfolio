@@ -9,6 +9,7 @@
  */
 
 import { useEffect, useRef } from 'react';
+import { gsap } from '../hooks/useGSAP';
 
 const TIMELINE_ITEMS = [
   {
@@ -92,6 +93,26 @@ export default function TimelineSection() {
   const glowHeadRef = useRef(null);
   const dotRefs     = useRef([]);
   const rippleRefs  = useRef([]);
+  const headerRef   = useRef(null);
+
+  /* ── GSAP heading entrance ── */
+  useEffect(() => {
+    if (!headerRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(headerRef.current.children,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 0.85, stagger: 0.18, ease: 'power3.out',
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 82%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     const section  = sectionRef.current;
@@ -159,13 +180,13 @@ export default function TimelineSection() {
     <section
       ref={sectionRef}
       id="timeline"
-      className="py-40 px-6 md:px-20 bg-surface-container-lowest reveal"
+      className="py-40 px-6 md:px-20 bg-surface-container-lowest section-sep"
       aria-label="Experience and education timeline"
     >
       <div className="max-w-5xl mx-auto">
 
-        {/* ── Header ─────────────────────────────────────────── */}
-        <div className="text-center mb-24">
+        {/* ── Header ──────────────────────────────────────── */}
+        <div ref={headerRef} className="text-center mb-24">
           <span
             className="font-mono uppercase tracking-[0.28em]"
             style={{ fontSize: '11px', fontWeight: 600, color: '#c0c1ff' }}

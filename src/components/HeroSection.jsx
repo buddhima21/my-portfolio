@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ShaderBackground from './ShaderBackground';
-import Lanyard from './Lanyard';
-import profileImg from '../assets/profile.jpg';
+import { gsap, ScrollTrigger } from '../hooks/useGSAP';
 
 /* ─── Typewriter hook ──────────────────────────────────────────
    Cycles through `words` array: types → pauses → deletes → next
@@ -56,12 +55,43 @@ function LinkedInIcon() {
 
 /* ─── HeroSection ──────────────────────────────────────────── */
 export default function HeroSection({
+  heroAnchorRef,
   ctaPrimary = { label: 'View Projects', href: '#projects' },
   ctaSecondary = { label: 'Contact Me', href: '#contact' },
   githubUrl = 'https://github.com/Buddhima21',
   linkedinUrl = 'https://www.linkedin.com/in/buddhima-hewage',
 }) {
   const role = useTypewriter(ROLES);
+  const heroContentRef = useRef(null);
+
+  /* ── Stagger entrance on mount ── */
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.fromTo('[data-hero-el]',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9, stagger: 0.12, delay: 0.3 }
+      );
+    }, heroContentRef);
+    return () => ctx.revert();
+  }, []);
+
+  /* ── Parallax: hero text moves up slower than scroll ── */
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.to(heroContentRef.current, {
+        yPercent: -18,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
@@ -91,10 +121,11 @@ export default function HeroSection({
       <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-8 mt-20 md:mt-24">
 
         {/* ── LEFT: Text ──────────────────────────────────── */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-5">
+        <div ref={heroContentRef} className="flex flex-col items-center md:items-start text-center md:text-left gap-5">
 
           {/* Name headline */}
           <h1
+            data-hero-el
             className="font-heading text-on-surface leading-[1.05] tracking-[-0.03em]"
             style={{
               fontSize: 'clamp(36px, 4.8vw, 68px)',
@@ -112,6 +143,7 @@ export default function HeroSection({
 
           {/* Subtitle line */}
           <p
+            data-hero-el
             className="text-on-surface-variant font-medium"
             style={{ fontSize: 'clamp(15px, 1.6vw, 20px)', letterSpacing: '-0.01em', opacity: 0.7 }}
           >
@@ -119,7 +151,7 @@ export default function HeroSection({
           </p>
 
           {/* Typewriter */}
-          <div className="flex items-center justify-center md:justify-start gap-0 w-full" style={{ minHeight: '36px' }}>
+          <div data-hero-el className="flex items-center justify-center md:justify-start gap-0 w-full" style={{ minHeight: '36px' }}>
             <span
               className="hero-typewriter font-display"
               style={{
@@ -135,6 +167,7 @@ export default function HeroSection({
 
           {/* Description */}
           <p
+            data-hero-el
             className="text-on-surface-variant mx-auto md:mx-0"
             style={{ fontSize: '15px', lineHeight: '1.8', maxWidth: '420px', opacity: 0.65 }}
           >
@@ -144,13 +177,13 @@ export default function HeroSection({
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2 w-full">
+          <div data-hero-el className="flex flex-wrap justify-center md:justify-start gap-3 pt-2 w-full">
             <a id="hero-cta-primary" href={ctaPrimary.href} className="hero-btn-primary">{ctaPrimary.label}</a>
             <a id="hero-cta-secondary" href={ctaSecondary.href} className="hero-btn-secondary">{ctaSecondary.label}</a>
           </div>
 
           {/* Scroll indicator */}
-          <div className="hidden md:flex items-center gap-3 pt-1 text-on-surface-variant">
+          <div data-hero-el className="hidden md:flex items-center gap-3 pt-1 text-on-surface-variant">
             <div className="hero-scroll-line" aria-hidden="true" />
             <span className="font-mono uppercase tracking-[0.2em] opacity-40" style={{ fontSize: '10px' }}>
               Scroll to explore
@@ -158,21 +191,13 @@ export default function HeroSection({
           </div>
         </div>
 
-        {/* ── RIGHT: Interactive 3D Lanyard card ──────────── */}
+        {/* ── RIGHT: Anchor placeholder for FloatingProfileCard ── */}
         <div
+          ref={heroAnchorRef}
           className="hidden md:block"
-          style={{ width: '100%', height: '90vh', maxHeight: '720px' }}
-        >
-          <Lanyard
-            position={[0, 0, 18]}
-            gravity={[0, -40, 0]}
-            fov={10}
-            transparent={true}
-            frontImage={profileImg}
-            imageFit="cover"
-            lanyardWidth={1}
-          />
-        </div>
+          aria-hidden="true"
+          style={{ width: '100%', height: '90vh', maxHeight: '720px', pointerEvents: 'none' }}
+        />
 
       </div>
     </section>

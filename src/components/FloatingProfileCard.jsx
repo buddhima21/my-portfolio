@@ -17,8 +17,6 @@ import profileImg from '../assets/profile.jpg';
 
 /* ── lerp helper ────────────────────────────────────────────── */
 const lerp = (a, b, t) => a + (b - a) * t;
-/* ── ease in-out cubic ──────────────────────────────────────── */
-const ease = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 /* ─── Main component ────────────────────────────────────────── */
 export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
@@ -55,11 +53,9 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
       if (!heroR || !aboutR) return;
 
       const heroSection  = document.getElementById('hero');
-      const aboutSection = document.getElementById('about');
-      if (!heroSection || !aboutSection) return;
+      if (!heroSection) return;
 
       const heroRect  = heroSection.getBoundingClientRect();
-      const aboutRect = aboutSection.getBoundingClientRect();
 
       /* Fire on the very first pixel of scroll, done at 55% of hero height */
       const scrollStart = 0;
@@ -130,15 +126,10 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
   const onMouseEnter = () => { hoveredRef.current = true;  };
   const onMouseLeave = () => { hoveredRef.current = false; };
 
-
-
   if (!visible) return null;
 
   /* ── border radius ── */
   const borderRadius = lerp(20, 24, progress);
-
-  /* ── lanyard fade ── */
-  const lanyardOpacity = Math.max(0, 1 - progress * 4);
 
   /* ── shadow ── */
   const shadowBlur = lerp(40, 60, progress);
@@ -151,12 +142,14 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
     height:   rect.height,
     zIndex:   45,
     pointerEvents: progress > 0.95 ? 'none' : 'auto',
-    /* Slow auto-sway — freezes when hovering */
     transform: `perspective(900px) rotateZ(${swayZ}deg) rotateX(${swayX}deg)`,
     transformOrigin: 'center -52px',
     transition: 'none',
     willChange: 'transform, left, top, width, height',
   };
+
+  /* ── lanyard fade ── */
+  const lanyardOpacity = Math.max(0, 1 - progress * 4);
 
   return createPortal(
     <div
@@ -165,8 +158,7 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-
-      {/* ── Lanyard (fades on scroll) ─────────────────── */}
+      {/* ── Belt (fades on scroll) ─────────────────────── */}
       <div
         aria-hidden="true"
         style={{
@@ -182,7 +174,7 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
           transition: 'opacity 0.1s linear',
         }}
       >
-        {/* Bar */}
+        {/* Horizontal bar */}
         <div style={{
           width: 80, height: 10, borderRadius: 5,
           background: 'linear-gradient(to bottom, rgba(192,193,255,0.35), rgba(99,102,241,0.20))',
@@ -190,7 +182,9 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
           boxShadow: '0 2px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
           position: 'relative',
         }}>
+          {/* Left rivet */}
           <span style={{ position:'absolute', top:'50%', left:10, transform:'translateY(-50%)', width:6, height:6, borderRadius:'50%', background:'radial-gradient(circle at 35% 35%, rgba(255,255,255,0.5), rgba(99,102,241,0.6))', border:'1px solid rgba(255,255,255,0.2)' }} />
+          {/* Right rivet */}
           <span style={{ position:'absolute', top:'50%', right:10, transform:'translateY(-50%)', width:6, height:6, borderRadius:'50%', background:'radial-gradient(circle at 35% 35%, rgba(255,255,255,0.5), rgba(99,102,241,0.6))', border:'1px solid rgba(255,255,255,0.2)' }} />
         </div>
         {/* Hook */}
@@ -279,14 +273,14 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
             }}
           />
 
-          {/* Gradient overlay — subtle at bottom */}
+          {/* Gradient overlay */}
           <div style={{
             position:'absolute', inset:0,
             background:`linear-gradient(to top, rgba(10,10,18,${lerp(0.6, 0.3, progress)}) 0%, transparent 55%)`,
             zIndex:4,
           }} />
 
-          {/* Open-to-work chip — fades as we reach about */}
+          {/* Open-to-work chip */}
           <div style={{
             position:'absolute', bottom:16, left:16,
             display:'inline-flex', alignItems:'center', gap:7,
@@ -312,7 +306,7 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
           </div>
         </div>
 
-        {/* Name tag — fades as we reach about */}
+        {/* Name tag */}
         <div style={{
           position:'absolute', bottom:-14, right:-14,
           zIndex:10,

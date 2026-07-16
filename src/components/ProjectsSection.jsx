@@ -9,6 +9,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import ProjectModal from './ProjectModal';
+import { gsap } from '../hooks/useGSAP';
 import rentEaseImg from '../assets/rentease.png';
 import renteaseAppImg from '../assets/renteaseApp.png';
 import smileDentalImg from '../assets/smiledental.png';
@@ -124,8 +125,49 @@ const STAGGER_DELAYS = ['0ms', '120ms', '240ms', '360ms'];
 
 export default function ProjectsSection() {
   const sectionRef = useRef(null);
+  const headerRef  = useRef(null);
   const cardRefs = useRef([]);
   const [selectedProject, setSelectedProject] = useState(null);
+
+  /* ── GSAP: staggered card entrances from alternating sides ── */
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      /* Header */
+      if (headerRef.current) {
+        gsap.fromTo(headerRef.current.children,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0, duration: 0.8, stagger: 0.14, ease: 'power3.out',
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: 'top 82%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+      /* Cards — alternate left/right */
+      cardRefs.current.forEach((card, i) => {
+        if (!card) return;
+        const xFrom = i % 2 === 0 ? -80 : 80;
+        gsap.fromTo(card,
+          { opacity: 0, x: xFrom, y: 20 },
+          {
+            opacity: 1, x: 0, y: 0,
+            duration: 0.85,
+            delay: i * 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 88%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   /* ── Mouse-tilt effect on each card ─────────────────────── */
   useEffect(() => {
@@ -176,13 +218,13 @@ export default function ProjectsSection() {
     <section
       id="projects"
       ref={sectionRef}
-      className="py-40 px-6 md:px-20 reveal"
+      className="py-40 px-6 md:px-20 section-sep"
       aria-label="Featured projects"
     >
       <div className="max-w-container-max mx-auto">
 
-        {/* ── Header ─────────────────────────────────────────── */}
-        <div className="mb-16 text-center">
+        {/* ── Header ────────────────────────────── */}
+        <div ref={headerRef} className="mb-16 text-center">
           <span
             className="font-mono uppercase text-primary tracking-[0.28em]"
             style={{ fontSize: '11px', fontWeight: 600 }}

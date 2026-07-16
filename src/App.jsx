@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence }  from "framer-motion";
-import { useScrollReveal }  from "./hooks/useScrollReveal";
 import { useLenis }         from "./hooks/useLenis";
+import { gsap, ScrollTrigger } from "./hooks/useGSAP";
 import Navbar               from "./components/Navbar";
 import HeroSection          from "./components/HeroSection";
 import AboutSection         from "./components/AboutSection";
@@ -11,18 +11,47 @@ import TimelineSection      from "./components/TimelineSection";
 import ContactSection       from "./components/ContactSection";
 import Footer               from "./components/Footer";
 import Preloader            from "./components/Preloader";
-import CustomCursor         from "./components/CustomCursor";
 import LineSidebar          from "./components/LineSidebar";
+import FloatingProfileCard  from "./components/FloatingProfileCard";
+import ClickSpark           from "./components/ClickSpark";
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
 
+  // Refs for FloatingProfileCard anchors
+  const heroAnchorRef  = useRef(null);
+  const aboutAnchorRef = useRef(null);
+
   // Smooth scroll — Lenis
   useLenis();
 
-  // Scroll-reveal animations (fires after load)
-  useScrollReveal(120);
+  // Global section entrance animations (fade + lift per section)
+  useEffect(() => {
+    // Wait a tick so all sections are mounted
+    const timer = setTimeout(() => {
+      const sections = document.querySelectorAll('section:not(#hero)');
+      sections.forEach((sec) => {
+        gsap.fromTo(
+          sec,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: sec,
+              start: 'top 88%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      });
+      ScrollTrigger.refresh();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [loaded]);
 
 
 
@@ -64,10 +93,13 @@ export default function App() {
   }, [loaded]);
 
   return (
-    <>
-      {/* ── Custom cursor (always on top) ──────────────────── */}
-      <CustomCursor />
-
+    <ClickSpark
+      sparkColor="#c0c1ff"
+      sparkSize={10}
+      sparkRadius={20}
+      sparkCount={8}
+      duration={500}
+    >
       {/* ── Cinematic preloader ────────────────────────────── */}
       <AnimatePresence>
         {!loaded && (
@@ -120,8 +152,8 @@ export default function App() {
       </div>
 
       <main>
-        <HeroSection />
-        <AboutSection />
+        <HeroSection heroAnchorRef={heroAnchorRef} />
+        <AboutSection aboutAnchorRef={aboutAnchorRef} />
         <TechStackSection />
         <ProjectsSection />
         <TimelineSection />
@@ -129,7 +161,13 @@ export default function App() {
       </main>
       <Footer />
 
+      {/* ── Floating profile card (portal, scroll-animated) ─── */}
+      <FloatingProfileCard
+        heroAnchorRef={heroAnchorRef}
+        aboutAnchorRef={aboutAnchorRef}
+      />
 
-    </>
+
+    </ClickSpark>
   );
 }

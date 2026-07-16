@@ -1,10 +1,81 @@
+import { useEffect, useRef } from 'react';
 import profileImg from '../assets/profile.jpg';
+import { gsap } from '../hooks/useGSAP';
 
-export default function AboutSection() {
+export default function AboutSection({ aboutAnchorRef }) {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const bioRef     = useRef(null);
+  const colsRef    = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+
+      /* ── Letter-by-letter heading ── */
+      const heading = headingRef.current;
+      if (heading) {
+        const text = heading.textContent;
+        heading.innerHTML = text
+          .split('')
+          .map((ch) =>
+            ch === ' '
+              ? ' '
+              : `<span class="gsap-split-char" style="opacity:0;transform:translateY(40px)">${ch}</span>`
+          )
+          .join('');
+
+        gsap.to(heading.querySelectorAll('.gsap-split-char'), {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.025,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: heading,
+            start: 'top 82%',
+            toggleActions: 'play none none none',
+          },
+        });
+      }
+
+      /* ── Bio paragraph fade+slide in ── */
+      if (bioRef.current) {
+        gsap.fromTo(bioRef.current,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: {
+              trigger: bioRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+      /* ── Detail columns stagger ── */
+      if (colsRef.current) {
+        gsap.fromTo(colsRef.current.children,
+          { opacity: 0, y: 32 },
+          {
+            opacity: 1, y: 0, duration: 0.7, stagger: 0.18, ease: 'power3.out',
+            scrollTrigger: {
+              trigger: colsRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      }
+
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
   return (
     <section
+      ref={sectionRef}
       id="about"
-      className="py-32 px-6 md:px-20 reveal"
+      className="py-32 px-6 md:px-20 section-sep"
       aria-label="About me"
     >
       <div className="max-w-5xl mx-auto flex flex-col gap-20">
@@ -12,8 +83,8 @@ export default function AboutSection() {
         {/* ── Top row: photo (left) + header & bio (right) ── */}
         <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-start">
 
-          {/* LEFT — profile photo card */}
-          <div className="hidden md:block flex-shrink-0">
+          {/* LEFT — profile photo card (anchor for FloatingProfileCard) */}
+          <div className="hidden md:block flex-shrink-0" ref={aboutAnchorRef}>
             <div
               style={{
                 width: 220,
@@ -74,12 +145,14 @@ export default function AboutSection() {
               Who I Am
             </span>
             <h2
+              ref={headingRef}
               className="font-heading text-on-surface font-semibold leading-tight"
               style={{ fontSize: 'clamp(32px, 4vw, 42px)', letterSpacing: '-0.02em' }}
             >
               Building Through Education.
             </h2>
             <p
+              ref={bioRef}
               className="text-on-surface-variant leading-relaxed"
               style={{ fontSize: '16px', lineHeight: 1.9 }}
             >
@@ -97,7 +170,7 @@ export default function AboutSection() {
         <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
 
         {/* ── Three detail columns ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0 md:divide-x md:divide-white/[0.06]">
+        <div ref={colsRef} className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0 md:divide-x md:divide-white/[0.06]">
 
           {/* Focused On */}
           <div className="md:pr-14">

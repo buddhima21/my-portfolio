@@ -19,14 +19,15 @@ export default function Footer() {
         {/* Social links */}
         <nav aria-label="Social links" className="flex gap-8">
           {[
-            { label: 'LinkedIn', href: '#' },
-            { label: 'GitHub',   href: '#' },
-            { label: 'Twitter',  href: '#' },
+            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/buddhima-hewage' },
+            { label: 'GitHub',   href: 'https://github.com/Buddhima21' },
             { label: 'Email',    href: 'https://mail.google.com/mail/?view=cm&to=buddhimasandaru@gmail.com&su=Hello%20from%20your%20Portfolio' },
           ].map(({ label, href }) => (
             <a
               key={label}
               href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               className="font-mono uppercase text-on-surface-variant hover:text-primary transition-colors duration-300 tracking-widest"
               style={{ fontSize: '11px' }}
             >

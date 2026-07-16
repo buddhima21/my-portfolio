@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
+import { gsap, ScrollTrigger } from "./useGSAP";
 
 /* ─────────────────────────────────────────────────────────────
    useLenis — buttery smooth momentum scroll
-   Replaces native scroll-behavior with Lenis physics-based
-   easing. Works seamlessly with existing scroll events.
+   Bridges Lenis position into GSAP ScrollTrigger so that all
+   ScrollTrigger animations fire at the correct scroll position
+   even when Lenis intercepts native scroll events.
 ───────────────────────────────────────────────────────────── */
 
 export function useLenis() {
@@ -18,8 +20,35 @@ export function useLenis() {
       touchMultiplier: 2,
     });
 
-    // Forward lenis scroll events so IntersectionObserver / scroll listeners still fire.
-    // Guard flag prevents re-entrancy (Lenis scroll → dispatched Event → Lenis scroll → …).
+    // ── Bridge: forward Lenis scroll position into GSAP ScrollTrigger ──
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // ── Feed Lenis into GSAP's ticker so both run on the same RAF ──
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    // ── Proxy: tell ScrollTrigger to read scroll from Lenis ──
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop(value) {
+        if (arguments.length) {
+          lenis.scrollTo(value, { immediate: true });
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+      },
+      pinType: document.body.style.transform ? "transform" : "fixed",
+    });
+
+    // Forward lenis scroll events so IntersectionObserver / FloatingProfileCard still fire.
     let dispatching = false;
     lenis.on("scroll", () => {
       if (dispatching) return;
@@ -27,13 +56,6 @@ export function useLenis() {
       window.dispatchEvent(new Event("scroll", { bubbles: false }));
       dispatching = false;
     });
-
-    let raf;
-    function loop(time) {
-      lenis.raf(time);
-      raf = requestAnimationFrame(loop);
-    }
-    raf = requestAnimationFrame(loop);
 
     // Allow anchor links (e.g. #projects) to work with Lenis
     document.querySelectorAll("a[href^='#']").forEach((anchor) => {
@@ -48,7 +70,8 @@ export function useLenis() {
     });
 
     return () => {
-      cancelAnimationFrame(raf);
+      gsap.ticker.remove(lenis.raf);
+      ScrollTrigger.scrollerProxy(null);
       lenis.destroy();
     };
   }, []);
