@@ -154,7 +154,6 @@ export default function FloatingProfileCard({ heroAnchorRef, aboutAnchorRef }) {
   return createPortal(
     <div
       ref={wrapRef}
-      className="hidden md:block"
       style={cardStyle}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
