@@ -83,8 +83,8 @@ export default function AboutSection({ aboutAnchorRef }) {
         {/* ── Top row: photo (left) + header & bio (right) ── */}
         <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-start">
 
-          {/* LEFT — profile photo card (anchor for FloatingProfileCard) */}
-          <div className="hidden md:block flex-shrink-0" ref={aboutAnchorRef}>
+          {/* LEFT — profile photo card (static fallback on mobile, anchor on desktop) */}
+          <div className="flex-shrink-0 mx-auto md:mx-0 flex justify-center md:block" ref={aboutAnchorRef}>
             <div
               style={{
                 width: 220,
