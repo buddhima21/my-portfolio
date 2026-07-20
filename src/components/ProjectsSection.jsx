@@ -11,12 +11,12 @@ import { useEffect, useRef, useState } from 'react';
 import ProjectModal from './ProjectModal';
 import { gsap } from '../hooks/useGSAP';
 
-// Project cover images — hosted CDN (no local large files)
-const rentEaseImg      = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&auto=format&fit=crop&q=70';
-const renteaseAppImg   = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&auto=format&fit=crop&q=70';
-const smileDentalImg   = 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=900&auto=format&fit=crop&q=70';
+// Project cover photos — your original screenshots
+import rentEaseImg    from '../assets/rentease.png';
+import renteaseAppImg from '../assets/renteaseApp.png';
+import smileDentalImg from '../assets/smiledental.png';
 
-// RentEase gallery — lightweight CDN
+// RentEase gallery — lightweight CDN (small JPGs, fine for mobile)
 const rentEaseImg1 = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop&q=65';
 const rentEaseImg2 = 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&auto=format&fit=crop&q=65';
 const rentEaseImg3 = 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=65';
