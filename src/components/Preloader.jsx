@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 /* ─────────────────────────────────────────────────────────────
@@ -16,27 +16,38 @@ export default function Preloader({ onComplete }) {
   const [exiting, setExiting]   = useState(false);
 
   useEffect(() => {
-    const DURATION = 2000; // ms
-    let start = null;
     let raf;
+    const ANIM_MS = 1500; // minimum display time for the animation
+    const start   = performance.now();
 
-    function step(ts) {
-      if (!start) start = ts;
+    // Tick the progress bar based on elapsed time (up to 90% max before real load)
+    function tick(ts) {
       const elapsed = ts - start;
-      const p = Math.min(Math.round((elapsed / DURATION) * 100), 100);
+      // Show up to 90% during animation, snap to 100 on real load
+      const p = Math.min(Math.round((elapsed / ANIM_MS) * 90), 90);
       setProgress(p);
-      if (p < 100) {
-        raf = requestAnimationFrame(step);
-      } else {
-        // Brief pause at 100% then exit
-        setTimeout(() => {
-          setExiting(true);
-          setTimeout(onComplete, 900);
-        }, 350);
+      if (elapsed < ANIM_MS) {
+        raf = requestAnimationFrame(tick);
       }
     }
+    raf = requestAnimationFrame(tick);
 
-    raf = requestAnimationFrame(step);
+    // Wait for real page load AND minimum anim time
+    const minWait  = new Promise((res) => setTimeout(res, ANIM_MS));
+    const loadWait = new Promise((res) => {
+      if (document.readyState === 'complete') return res();
+      window.addEventListener('load', res, { once: true });
+    });
+
+    Promise.all([minWait, loadWait]).then(() => {
+      cancelAnimationFrame(raf);
+      setProgress(100);
+      setTimeout(() => {
+        setExiting(true);
+        setTimeout(onComplete, 900);
+      }, 350);
+    });
+
     return () => cancelAnimationFrame(raf);
   }, [onComplete]);
 

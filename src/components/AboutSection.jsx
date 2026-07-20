@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import profileImg from '../assets/profile.jpg';
 import { gsap } from '../hooks/useGSAP';
 
 export default function AboutSection({ aboutAnchorRef }) {
@@ -83,57 +82,13 @@ export default function AboutSection({ aboutAnchorRef }) {
         {/* ── Top row: photo (left) + header & bio (right) ── */}
         <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-start">
 
-          {/* LEFT — profile photo card (static fallback on mobile, anchor on desktop) */}
-          <div className="flex-shrink-0 mx-auto md:mx-0 flex justify-center md:block" ref={aboutAnchorRef}>
-            <div
-              style={{
-                width: 220,
-                height: 280,
-                borderRadius: 24,
-                overflow: 'hidden',
-                position: 'relative',
-                border: '1px solid rgba(192,193,255,0.15)',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)',
-              }}
-            >
-              <img
-                src={profileImg}
-                alt="Buddhima Hewage"
-                draggable={false}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: '50% 15%',
-                  display: 'block',
-                }}
-              />
-              {/* Bottom gradient */}
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to top, rgba(10,10,18,0.55) 0%, transparent 60%)',
-              }} />
-              {/* Open-to-work chip */}
-              <div style={{
-                position: 'absolute', bottom: 14, left: 14,
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                padding: '5px 12px', borderRadius: 100,
-                background: 'rgba(10,10,18,0.88)',
-                border: '1px solid rgba(74,222,128,0.3)',
-                backdropFilter: 'blur(14px)',
-                fontSize: 11, fontWeight: 500,
-                color: 'rgba(255,255,255,0.85)',
-                whiteSpace: 'nowrap',
-              }}>
-                <span style={{
-                  display: 'inline-block', width: 7, height: 7, borderRadius: '50%',
-                  background: '#4ade80',
-                  animation: 'statusPulse 2s ease-out infinite',
-                }} />
-                Open to Work
-              </div>
-            </div>
-          </div>
+          {/* LEFT — invisible anchor; FloatingProfileCard lands here via portal */}
+          <div
+            ref={aboutAnchorRef}
+            className="flex-shrink-0 mx-auto md:mx-0"
+            style={{ width: 220, height: 280, borderRadius: 24 }}
+            aria-hidden="true"
+          />
 
 
           {/* RIGHT — text content */}

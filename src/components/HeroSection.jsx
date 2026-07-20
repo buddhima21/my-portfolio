@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import ShaderBackground from './ShaderBackground';
 import { gsap, ScrollTrigger } from '../hooks/useGSAP';
 
+// Detect mobile once at module level — avoids re-render churn
+const IS_MOBILE = typeof window !== 'undefined' && window.innerWidth < 768;
+
 /* ─── Typewriter hook ──────────────────────────────────────────
    Cycles through `words` array: types → pauses → deletes → next
 ───────────────────────────────────────────────────────────── */
@@ -99,9 +102,16 @@ export default function HeroSection({
       className="relative w-full min-h-[100dvh] md:h-screen py-24 md:py-0 flex items-center overflow-hidden"
       aria-label="Hero section"
     >
-      {/* WebGL Shader Background */}
+      {/* WebGL Shader Background — desktop only; CSS gradient fallback on mobile */}
       <div className="absolute inset-0 opacity-50 pointer-events-none">
-        <ShaderBackground className="absolute inset-0 w-full h-full" />
+        {IS_MOBILE ? (
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(77,80,205,0.35), transparent 65%), radial-gradient(ellipse 60% 50% at 75% 25%, rgba(139,92,246,0.25), transparent 60%), #090910',
+          }} />
+        ) : (
+          <ShaderBackground className="absolute inset-0 w-full h-full" />
+        )}
       </div>
 
       {/* Radial gradient overlay */}

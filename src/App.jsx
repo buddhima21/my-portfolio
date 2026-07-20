@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { AnimatePresence }  from "framer-motion";
 import { useLenis }         from "./hooks/useLenis";
 import { gsap, ScrollTrigger } from "./hooks/useGSAP";
@@ -6,18 +6,23 @@ import Navbar               from "./components/Navbar";
 import HeroSection          from "./components/HeroSection";
 import AboutSection         from "./components/AboutSection";
 import TechStackSection     from "./components/TechStackSection";
-import ProjectsSection      from "./components/ProjectsSection";
 import TimelineSection      from "./components/TimelineSection";
-import ContactSection       from "./components/ContactSection";
 import Footer               from "./components/Footer";
 import Preloader            from "./components/Preloader";
 import LineSidebar          from "./components/LineSidebar";
 import FloatingProfileCard  from "./components/FloatingProfileCard";
 import ClickSpark           from "./components/ClickSpark";
 
+// Heavy sections — loaded on demand (code-split chunks)
+const ProjectsSection = lazy(() => import("./components/ProjectsSection"));
+const ContactSection  = lazy(() => import("./components/ContactSection"));
+
 export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+
+  // Only animate the floating card on desktop (≥ 768px)
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // Refs for FloatingProfileCard anchors
   const heroAnchorRef  = useRef(null);
@@ -155,17 +160,23 @@ export default function App() {
         <HeroSection heroAnchorRef={heroAnchorRef} />
         <AboutSection aboutAnchorRef={aboutAnchorRef} />
         <TechStackSection />
-        <ProjectsSection />
+        <Suspense fallback={null}>
+          <ProjectsSection />
+        </Suspense>
         <TimelineSection />
-        <ContactSection />
+        <Suspense fallback={null}>
+          <ContactSection />
+        </Suspense>
       </main>
       <Footer />
 
-      {/* ── Floating profile card (portal, scroll-animated) ─── */}
-      <FloatingProfileCard
-        heroAnchorRef={heroAnchorRef}
-        aboutAnchorRef={aboutAnchorRef}
-      />
+      {/* ── Floating profile card — desktop only (no RAF waste on mobile) ─── */}
+      {!isMobile && (
+        <FloatingProfileCard
+          heroAnchorRef={heroAnchorRef}
+          aboutAnchorRef={aboutAnchorRef}
+        />
+      )}
 
 
     </ClickSpark>

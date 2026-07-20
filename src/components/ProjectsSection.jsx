@@ -10,19 +10,21 @@
 import { useEffect, useRef, useState } from 'react';
 import ProjectModal from './ProjectModal';
 import { gsap } from '../hooks/useGSAP';
-import rentEaseImg from '../assets/rentease.png';
-import renteaseAppImg from '../assets/renteaseApp.png';
-import smileDentalImg from '../assets/smiledental.png';
 
-// RentEase Gallery Images
-import rentEaseImg1 from '../assets/rentease/rentease1.jpg';
-import rentEaseImg2 from '../assets/rentease/rentease2.jpg';
-import rentEaseImg3 from '../assets/rentease/rentease3.jpg';
-import rentEaseImg4 from '../assets/rentease/rentease4.jpg';
-import rentEaseImg5 from '../assets/rentease/rentease5.jpg';
-import rentEaseImg6 from '../assets/rentease/rentease6.jpg';
-import rentEaseImg7 from '../assets/rentease/rentease7.jpg';
-import rentEaseImg8 from '../assets/rentease/rentease8.jpg';
+// Project cover images — hosted CDN (no local large files)
+const rentEaseImg      = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&auto=format&fit=crop&q=70';
+const renteaseAppImg   = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&auto=format&fit=crop&q=70';
+const smileDentalImg   = 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=900&auto=format&fit=crop&q=70';
+
+// RentEase gallery — lightweight CDN
+const rentEaseImg1 = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&auto=format&fit=crop&q=65';
+const rentEaseImg2 = 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&auto=format&fit=crop&q=65';
+const rentEaseImg3 = 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=65';
+const rentEaseImg4 = 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&auto=format&fit=crop&q=65';
+const rentEaseImg5 = 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&auto=format&fit=crop&q=65';
+const rentEaseImg6 = 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800&auto=format&fit=crop&q=65';
+const rentEaseImg7 = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=65';
+const rentEaseImg8 = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop&q=65';
 
 const PROJECTS = [
   {
