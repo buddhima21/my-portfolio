@@ -11,7 +11,6 @@ export default function AboutSection({ aboutAnchorRef }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      /* Letter-by-letter heading */
       const heading = headingRef.current;
       if (heading) {
         const text = heading.textContent;
@@ -38,7 +37,6 @@ export default function AboutSection({ aboutAnchorRef }) {
         });
       }
 
-      /* Bio paragraph */
       if (bioRef.current) {
         gsap.fromTo(bioRef.current,
           { opacity: 0, y: 24 },
@@ -53,7 +51,6 @@ export default function AboutSection({ aboutAnchorRef }) {
         );
       }
 
-      /* Detail columns */
       if (colsRef.current) {
         gsap.fromTo(colsRef.current.children,
           { opacity: 0, y: 32 },
@@ -83,7 +80,7 @@ export default function AboutSection({ aboutAnchorRef }) {
 
         <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
 
-          {/* MOBILE ONLY — static profile card */}
+          {/* MOBILE ONLY - static profile card */}
           <div className="md:hidden flex justify-center w-full">
             <div style={{
               width: 200,
@@ -132,7 +129,7 @@ export default function AboutSection({ aboutAnchorRef }) {
             </div>
           </div>
 
-          {/* DESKTOP ONLY — invisible anchor for FloatingProfileCard */}
+          {/* DESKTOP ONLY - invisible anchor for FloatingProfileCard */}
           <div
             ref={aboutAnchorRef}
             className="hidden md:block flex-shrink-0"
@@ -170,10 +167,8 @@ export default function AboutSection({ aboutAnchorRef }) {
           </div>
         </div>
 
-        {/* Hairline divider */}
         <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
 
-        {/* Three detail columns */}
         <div ref={colsRef} className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0 md:divide-x md:divide-white/[0.06]">
 
           <div className="md:pr-14">
@@ -181,7 +176,7 @@ export default function AboutSection({ aboutAnchorRef }) {
               Focused On
             </p>
             <ul className="flex flex-col gap-3">
-              {['Full-Stack Development', 'AI & Machine Learning', 'Cloud Computing', 'Software Architecture'].map(item => (
+              {['Full-Stack Development', 'AI and Machine Learning', 'Cloud Computing', 'Software Architecture'].map(item => (
                 <li key={item} className="text-on-surface-variant" style={{ fontSize: '15px', lineHeight: 1.7 }}>{item}</li>
               ))}
             </ul>

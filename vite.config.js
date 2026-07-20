@@ -1,22 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import viteImagemin from 'vite-plugin-imagemin'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    viteImagemin({
-      // Compress PNGs aggressively
-      optipng:   { optimizationLevel: 7 },
-      pngquant:  { quality: [0.6, 0.75], speed: 4 },
-      // Compress JPEGs
-      mozjpeg:   { quality: 75 },
-      // Convert everything to WebP (best mobile format)
-      webp:      { quality: 75 },
-      // SVGs
-      svgo:      { plugins: [{ removeViewBox: false }] },
+    ViteImageOptimizer({
+      png:  { quality: 70 },
+      jpg:  { quality: 75 },
+      jpeg: { quality: 75 },
+      webp: { lossless: false, quality: 75 },
     }),
   ],
   assetsInclude: ['**/*.glb'],
 })
+
