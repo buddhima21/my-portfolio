@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import profileImg from '../assets/profile.jpg';
 import { gsap } from '../hooks/useGSAP';
 
 export default function AboutSection({ aboutAnchorRef }) {
@@ -10,7 +11,7 @@ export default function AboutSection({ aboutAnchorRef }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
 
-      /* ── Letter-by-letter heading ── */
+      /* Letter-by-letter heading */
       const heading = headingRef.current;
       if (heading) {
         const text = heading.textContent;
@@ -37,7 +38,7 @@ export default function AboutSection({ aboutAnchorRef }) {
         });
       }
 
-      /* ── Bio paragraph fade+slide in ── */
+      /* Bio paragraph */
       if (bioRef.current) {
         gsap.fromTo(bioRef.current,
           { opacity: 0, y: 24 },
@@ -52,7 +53,7 @@ export default function AboutSection({ aboutAnchorRef }) {
         );
       }
 
-      /* ── Detail columns stagger ── */
+      /* Detail columns */
       if (colsRef.current) {
         gsap.fromTo(colsRef.current.children,
           { opacity: 0, y: 32 },
@@ -70,28 +71,76 @@ export default function AboutSection({ aboutAnchorRef }) {
     }, sectionRef);
     return () => ctx.revert();
   }, []);
+
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="py-32 px-6 md:px-20 section-sep"
+      className="pt-16 pb-32 md:py-32 px-6 md:px-20 section-sep"
       aria-label="About me"
     >
       <div className="max-w-5xl mx-auto flex flex-col gap-20">
 
-        {/* ── Top row: photo (left) + header & bio (right) ── */}
-        <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-start">
+        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
 
-          {/* LEFT — invisible anchor; FloatingProfileCard lands here via portal */}
+          {/* MOBILE ONLY � static profile card */}
+          <div className="md:hidden flex justify-center w-full">
+            <div style={{
+              width: 200,
+              height: 260,
+              borderRadius: 20,
+              overflow: 'hidden',
+              position: 'relative',
+              border: '1px solid rgba(192,193,255,0.18)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)',
+            }}>
+              <img
+                src={profileImg}
+                alt="Buddhima Hewage"
+                loading="lazy"
+                draggable={false}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: '50% 15%',
+                  display: 'block',
+                }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(10,10,18,0.65) 0%, transparent 55%)',
+              }} />
+              <div style={{
+                position: 'absolute', bottom: 14, left: 14,
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                padding: '5px 12px', borderRadius: 100,
+                background: 'rgba(10,10,18,0.88)',
+                border: '1px solid rgba(74,222,128,0.3)',
+                backdropFilter: 'blur(14px)',
+                fontSize: 11, fontWeight: 500,
+                color: 'rgba(255,255,255,0.85)',
+                whiteSpace: 'nowrap',
+              }}>
+                <span style={{
+                  display: 'inline-block', width: 7, height: 7, borderRadius: '50%',
+                  background: '#4ade80',
+                  animation: 'statusPulse 2s ease-out infinite',
+                }} />
+                Open to Work
+              </div>
+            </div>
+          </div>
+
+          {/* DESKTOP ONLY � invisible anchor for FloatingProfileCard */}
           <div
             ref={aboutAnchorRef}
-            className="flex-shrink-0 mx-auto md:mx-0"
+            className="hidden md:block flex-shrink-0"
             style={{ width: 220, height: 280, borderRadius: 24 }}
             aria-hidden="true"
           />
 
-
-          {/* RIGHT — text content */}
+          {/* Text content */}
           <div className="flex flex-col gap-6 flex-1">
             <span
               className="font-mono uppercase text-primary tracking-[0.28em]"
@@ -121,71 +170,41 @@ export default function AboutSection({ aboutAnchorRef }) {
           </div>
         </div>
 
-        {/* ── Hairline divider ── */}
+        {/* Hairline divider */}
         <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
 
-        {/* ── Three detail columns ── */}
+        {/* Three detail columns */}
         <div ref={colsRef} className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0 md:divide-x md:divide-white/[0.06]">
 
-          {/* Focused On */}
           <div className="md:pr-14">
-            <p
-              className="font-mono uppercase tracking-widest mb-6"
-              style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}
-            >
+            <p className="font-mono uppercase tracking-widest mb-6" style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}>
               Focused On
             </p>
             <ul className="flex flex-col gap-3">
               {['Full-Stack Development', 'AI & Machine Learning', 'Cloud Computing', 'Software Architecture'].map(item => (
-                <li
-                  key={item}
-                  className="text-on-surface-variant"
-                  style={{ fontSize: '15px', lineHeight: 1.7 }}
-                >
-                  {item}
-                </li>
+                <li key={item} className="text-on-surface-variant" style={{ fontSize: '15px', lineHeight: 1.7 }}>{item}</li>
               ))}
             </ul>
           </div>
 
-          {/* Currently Learning */}
           <div className="md:px-14">
-            <p
-              className="font-mono uppercase tracking-widest mb-6"
-              style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}
-            >
+            <p className="font-mono uppercase tracking-widest mb-6" style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}>
               Learning
             </p>
             <ul className="flex flex-col gap-3">
               {['AWS Cloud Fundamentals', 'Advanced React', 'ML Applications', 'DevOps Practices'].map(item => (
-                <li
-                  key={item}
-                  className="text-on-surface-variant"
-                  style={{ fontSize: '15px', lineHeight: 1.7 }}
-                >
-                  {item}
-                </li>
+                <li key={item} className="text-on-surface-variant" style={{ fontSize: '15px', lineHeight: 1.7 }}>{item}</li>
               ))}
             </ul>
           </div>
 
-          {/* Beyond Tech */}
           <div className="md:pl-14">
-            <p
-              className="font-mono uppercase tracking-widest mb-6"
-              style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}
-            >
+            <p className="font-mono uppercase tracking-widest mb-6" style={{ fontSize: '10px', fontWeight: 600, color: '#c0c1ff' }}>
               Beyond Tech
             </p>
             <ul className="flex flex-col gap-3">
               {['Event Organization', 'Team Collaboration', 'Continuous Learning', 'Problem Solving'].map(item => (
-                <li
-                  key={item}
-                  className="text-on-surface-variant"
-                  style={{ fontSize: '15px', lineHeight: 1.7 }}
-                >
-                  {item}
-                </li>
+                <li key={item} className="text-on-surface-variant" style={{ fontSize: '15px', lineHeight: 1.7 }}>{item}</li>
               ))}
             </ul>
           </div>
