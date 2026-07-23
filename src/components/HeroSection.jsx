@@ -99,7 +99,7 @@ export default function HeroSection({
   return (
     <section
       id="hero"
-      className="relative w-full min-h-[100dvh] md:h-screen py-24 md:py-0 flex items-center overflow-hidden"
+      className="relative w-full min-h-[100dvh] md:h-screen pt-20 pb-16 md:py-0 flex items-center overflow-hidden"
       aria-label="Hero section"
     >
       {/* WebGL Shader Background — desktop only; CSS gradient fallback on mobile */}
@@ -128,7 +128,7 @@ export default function HeroSection({
       <div className="hero-orb hero-orb--cyan" aria-hidden="true" />
 
       {/* 2-column grid */}
-      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-16 md:gap-8 mt-10 md:mt-24">
+      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-20 grid grid-cols-1 md:grid-cols-2 items-center gap-0 md:gap-8 mt-10 md:mt-24">
 
         {/* ── LEFT: Text ──────────────────────────────────── */}
         <div ref={heroContentRef} className="flex flex-col items-center md:items-start text-center md:text-left gap-5">
@@ -204,7 +204,7 @@ export default function HeroSection({
         {/* ── RIGHT: Anchor placeholder for FloatingProfileCard ── */}
         <div
           ref={heroAnchorRef}
-          className="flex justify-center items-center w-full"
+          className="hidden md:flex justify-center items-center w-full"
           aria-hidden="true"
           style={{ minHeight: '340px', pointerEvents: 'none' }}
         >

@@ -139,6 +139,20 @@
   }
 }
 
+/* ─── Project Modal — two-panel layout on desktop ───────────── */
+@media (min-width: 768px) {
+  .md-panel-grid {
+    grid-template-columns: 1fr 1fr !important;
+    min-height: 500px !important;
+  }
+}
+
+/* ─── Fade-up keyframe for modal tab content ────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ─── Nav link ─────────────────────────────────────────────── */
 .nav-link {
   position: relative;

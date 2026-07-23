@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useRef, useState, useCallback, lazy, Suspense } from "react";
 import { AnimatePresence }  from "framer-motion";
 import { useLenis }         from "./hooks/useLenis";
 import { gsap, ScrollTrigger } from "./hooks/useGSAP";
@@ -21,8 +21,18 @@ export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
 
-  // Only animate the floating card on desktop (≥ 768px)
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  // Only animate the floating card on desktop (≥ 768px) — reactive
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 768
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    const handler = (e) => setIsMobile(e.matches);
+    setIsMobile(mql.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
 
   // Refs for FloatingProfileCard anchors
   const heroAnchorRef  = useRef(null);
@@ -30,6 +40,9 @@ export default function App() {
 
   // Smooth scroll — Lenis
   useLenis();
+
+  // Stable callback for Preloader — avoids re-registering the load listener
+  const handlePreloaderComplete = useCallback(() => setLoaded(true), []);
 
   // Global section entrance animations (fade + lift per section)
   useEffect(() => {
@@ -108,7 +121,7 @@ export default function App() {
       {/* ── Cinematic preloader ────────────────────────────── */}
       <AnimatePresence>
         {!loaded && (
-          <Preloader key="preloader" onComplete={() => setLoaded(true)} />
+          <Preloader key="preloader" onComplete={handlePreloaderComplete} />
         )}
       </AnimatePresence>
 

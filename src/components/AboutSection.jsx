@@ -73,12 +73,12 @@ export default function AboutSection({ aboutAnchorRef }) {
     <section
       ref={sectionRef}
       id="about"
-      className="pt-16 pb-32 md:py-32 px-6 md:px-20 section-sep"
+      className="py-16 md:py-32 px-6 md:px-20 section-sep"
       aria-label="About me"
     >
-      <div className="max-w-5xl mx-auto flex flex-col gap-20">
+      <div className="max-w-5xl mx-auto flex flex-col gap-12 md:gap-20">
 
-        <div className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
 
           {/* MOBILE ONLY - static profile card */}
           <div className="md:hidden flex justify-center w-full">
